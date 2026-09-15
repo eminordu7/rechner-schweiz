@@ -4,563 +4,568 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lohnrechner Schweiz – Brutto Netto Rechner</title>
+<title>Lohnrechner Schweiz 2026 – Brutto Netto Rechner</title>
 
 <meta name="description"
-content="Lohnrechner Schweiz 2026: Bruttolohn in Nettolohn umrechnen. AHV, IV, EO, ALV, NBU, BVG und Quellensteuer berücksichtigen.">
+content="Lohnrechner Schweiz 2026: Bruttolohn in Nettolohn umrechnen. AHV, IV, EO, ALV, NBU und BVG berücksichtigen.">
 
 <style>
 
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#f4f6f8;
+color:#17202a
 }
 
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: #f4f6f8;
-  color: #17202a;
+.header{
+background:#111827;
+color:white;
+padding:22px 20px
 }
 
-.header {
-  background: #111827;
-  color: white;
-  padding: 24px 20px;
+.header-inner{
+max-width:1050px;
+margin:auto
 }
 
-.header-inner {
-  max-width: 1050px;
-  margin: auto;
+.logo{
+font-size:21px;
+font-weight:800
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: 800;
+.logo span{
+color:#ff3b30
 }
 
-.logo span {
-  color: #ff3b30;
+.container{
+max-width:1050px;
+margin:35px auto;
+padding:0 18px
 }
 
-.container {
-  max-width: 1050px;
-  margin: 35px auto;
-  padding: 0 18px;
+.hero{
+margin-bottom:25px
 }
 
-.hero {
-  margin-bottom: 25px;
+.hero h1{
+font-size:38px;
+margin:0 0 10px
 }
 
-.hero h1 {
-  font-size: 38px;
-  margin: 0 0 10px;
+.hero p{
+color:#667085;
+font-size:17px;
+line-height:1.5
 }
 
-.hero p {
-  color: #667085;
-  font-size: 17px;
+.layout{
+display:grid;
+grid-template-columns:1fr 380px;
+gap:25px
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 25px;
+.card{
+background:white;
+border-radius:18px;
+padding:28px;
+box-shadow:0 5px 25px rgba(0,0,0,.06)
 }
 
-.card {
-  background: white;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 5px 25px rgba(0,0,0,.06);
+.card h2{
+margin-top:0
 }
 
-.card h2 {
-  margin-top: 0;
-  font-size: 21px;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+.field label{
+display:block;
+font-size:14px;
+font-weight:700;
+margin-bottom:7px
 }
 
-.field {
-  margin-bottom: 4px;
+input,select{
+width:100%;
+border:1px solid #d0d5dd;
+border-radius:10px;
+padding:13px;
+font-size:16px;
+background:white
 }
 
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 7px;
+input:focus,select:focus{
+outline:2px solid #ff3b30;
+border-color:#ff3b30
 }
 
-input,
-select {
-  width: 100%;
-  border: 1px solid #d0d5dd;
-  border-radius: 10px;
-  padding: 13px;
-  font-size: 16px;
-  background: white;
+button{
+width:100%;
+border:0;
+border-radius:11px;
+padding:16px;
+margin-top:22px;
+background:#ff3b30;
+color:white;
+font-size:17px;
+font-weight:800;
+cursor:pointer
 }
 
-input:focus,
-select:focus {
-  outline: 2px solid #ff3b30;
-  border-color: #ff3b30;
+button:hover{
+background:#df2d25
 }
 
-button {
-  width: 100%;
-  border: 0;
-  border-radius: 11px;
-  padding: 16px;
-  margin-top: 22px;
-  background: #ff3b30;
-  color: white;
-  font-size: 17px;
-  font-weight: 800;
-  cursor: pointer;
+.result-card{
+background:#111827;
+color:white;
+border-radius:18px;
+padding:28px;
+position:sticky;
+top:20px
 }
 
-button:hover {
-  background: #df2d25;
+.result-label{
+color:#aeb7c5;
+font-size:14px
 }
 
-.result-card {
-  background: #111827;
-  color: white;
-  border-radius: 18px;
-  padding: 28px;
-  position: sticky;
-  top: 20px;
+.netto{
+font-size:42px;
+font-weight:900;
+margin:7px 0 25px
 }
 
-.result-label {
-  color: #aeb7c5;
-  font-size: 14px;
+.result-row{
+display:flex;
+justify-content:space-between;
+padding:11px 0;
+border-bottom:1px solid rgba(255,255,255,.12);
+font-size:15px
 }
 
-.netto {
-  font-size: 42px;
-  font-weight: 900;
-  margin: 7px 0 25px;
+.minus{
+color:#ffb4ae
 }
 
-.result-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 11px 0;
-  border-bottom: 1px solid rgba(255,255,255,.12);
-  font-size: 15px;
+.total{
+margin-top:18px;
+padding-top:18px;
+border-top:1px solid rgba(255,255,255,.2);
+display:flex;
+justify-content:space-between;
+font-weight:800
 }
 
-.result-row:last-child {
-  border-bottom: none;
+.info{
+background:#fff7ed;
+color:#7c4a03;
+border-radius:10px;
+padding:14px;
+font-size:13px;
+line-height:1.5;
+margin-top:18px
 }
 
-.minus {
-  color: #ffb4ae;
+.disclaimer{
+background:#f8fafc;
+border:1px solid #e2e8f0;
+border-radius:12px;
+padding:18px;
+margin-top:25px;
+font-size:13px;
+line-height:1.6;
+color:#596579
 }
 
-.total {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,.2);
-  display: flex;
-  justify-content: space-between;
-  font-weight: 800;
+@media(max-width:800px){
+
+.layout{
+grid-template-columns:1fr
 }
 
-.info {
-  background: #fff7ed;
-  color: #7c4a03;
-  border-radius: 10px;
-  padding: 13px;
-  font-size: 13px;
-  margin-top: 18px;
-  line-height: 1.5;
+.result-card{
+position:static
 }
-
-.footer-note {
-  margin-top: 25px;
-  color: #667085;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.hidden {
-  display: none;
-}
-
-@media(max-width: 800px) {
-
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .result-card {
-    position: static;
-  }
 
 }
 
-@media(max-width: 600px) {
+@media(max-width:600px){
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.grid{
+grid-template-columns:1fr
+}
 
-  .hero h1 {
-    font-size: 30px;
-  }
+.hero h1{
+font-size:30px
+}
 
-  .netto {
-    font-size: 36px;
-  }
+.netto{
+font-size:36px
+}
 
 }
 
 </style>
 </head>
 
+
 <body>
 
 <header class="header">
 
-  <div class="header-inner">
+<div class="header-inner">
 
-    <div class="logo">
-      Rechner<span>Schweiz</span>
-    </div>
+<div class="logo">
+Rechner<span>Schweiz</span>
+</div>
 
-  </div>
+</div>
 
 </header>
 
 
 <main class="container">
 
-  <section class="hero">
 
-    <h1>Lohnrechner Schweiz</h1>
+<section class="hero">
 
-    <p>
-      Bruttolohn eingeben und deinen ungefähren Nettolohn berechnen.
-      Sozialversicherungen und persönliche Angaben werden berücksichtigt.
-    </p>
+<h1>Lohnrechner Schweiz 2026</h1>
 
-  </section>
+<p>
+Wie viel bleibt vom Bruttolohn übrig?
+Berechne deinen ungefähren Nettolohn mit den wichtigsten
+Schweizer Sozialversicherungsabzügen.
+</p>
 
+</section>
 
-  <div class="layout">
 
+<div class="layout">
 
-    <!-- EINGABEN -->
 
-    <section class="card">
+<section class="card">
 
-      <h2>Deine Angaben</h2>
+<h2>Persönliche Angaben</h2>
 
-      <div class="grid">
 
+<div class="grid">
 
-        <div class="field">
 
-          <label>Bruttolohn pro Monat</label>
+<div>
 
-          <input
-            id="brutto"
-            type="number"
-            value="10000"
-            min="0"
-            step="100"
-            oninput="berechnen()"
-          >
+<label>Bruttolohn pro Monat</label>
 
-        </div>
+<input
+id="brutto"
+type="number"
+value="10000"
+min="0"
+step="100"
+oninput="berechnen()">
 
+</div>
 
-        <div class="field">
 
-          <label>Beschäftigungsgrad</label>
+<div>
 
-          <input
-            id="pensum"
-            type="number"
-            value="100"
-            min="1"
-            max="100"
-            oninput="berechnen()"
-          >
+<label>Beschäftigungsgrad</label>
 
-        </div>
+<input
+id="pensum"
+type="number"
+value="100"
+min="1"
+max="100"
+oninput="berechnen()">
 
+</div>
 
-        <div class="field">
 
-          <label>Kanton</label>
+<div>
 
-          <select id="kanton" onchange="berechnen()">
+<label>Kanton</label>
 
-            <option value="AG">Aargau</option>
-            <option value="AI">Appenzell Innerrhoden</option>
-            <option value="AR">Appenzell Ausserrhoden</option>
-            <option value="BE">Bern</option>
-            <option value="BL">Basel-Landschaft</option>
-            <option value="BS">Basel-Stadt</option>
-            <option value="FR">Freiburg</option>
-            <option value="GE">Genf</option>
-            <option value="GL">Glarus</option>
-            <option value="GR">Graubünden</option>
-            <option value="JU">Jura</option>
-            <option value="LU">Luzern</option>
-            <option value="NE">Neuenburg</option>
-            <option value="NW">Nidwalden</option>
-            <option value="OW">Obwalden</option>
-            <option value="SG" selected>St. Gallen</option>
-            <option value="SH">Schaffhausen</option>
-            <option value="SO">Solothurn</option>
-            <option value="SZ">Schwyz</option>
-            <option value="TG">Thurgau</option>
-            <option value="TI">Tessin</option>
-            <option value="UR">Uri</option>
-            <option value="VD">Waadt</option>
-            <option value="VS">Wallis</option>
-            <option value="ZG">Zug</option>
-            <option value="ZH">Zürich</option>
+<select id="kanton">
 
-          </select>
+<option>AG</option>
+<option>AI</option>
+<option>AR</option>
+<option>BE</option>
+<option>BL</option>
+<option>BS</option>
+<option>FR</option>
+<option>GE</option>
+<option>GL</option>
+<option>GR</option>
+<option>JU</option>
+<option>LU</option>
+<option>NE</option>
+<option>NW</option>
+<option>OW</option>
+<option selected>SG</option>
+<option>SH</option>
+<option>SO</option>
+<option>SZ</option>
+<option>TG</option>
+<option>TI</option>
+<option>UR</option>
+<option>VD</option>
+<option>VS</option>
+<option>ZG</option>
+<option>ZH</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Alter</label>
+<div>
 
-          <input
-            id="alter"
-            type="number"
-            value="33"
-            min="16"
-            max="80"
-            oninput="berechnen()"
-          >
+<label>Alter</label>
 
-        </div>
+<input
+id="alter"
+type="number"
+value="33"
+min="16"
+max="80"
+oninput="berechnen()">
 
+</div>
 
-        <div class="field">
 
-          <label>Zivilstand</label>
+<div>
 
-          <select id="zivilstand" onchange="berechnen()">
+<label>Zivilstand</label>
 
-            <option value="ledig">Ledig</option>
-            <option value="verheiratet">Verheiratet</option>
+<select id="zivilstand">
 
-          </select>
+<option value="ledig">Ledig</option>
+<option value="verheiratet">Verheiratet</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Kinder</label>
+<div>
 
-          <input
-            id="kinder"
-            type="number"
-            value="0"
-            min="0"
-            max="10"
-            oninput="berechnen()"
-          >
+<label>Kinder</label>
 
-        </div>
+<input
+id="kinder"
+type="number"
+value="0"
+min="0"
+max="10">
 
+</div>
 
-        <div class="field">
 
-          <label>13. Monatslohn</label>
+<div>
 
-          <select id="dreizehn" onchange="berechnen()">
+<label>13. Monatslohn</label>
 
-            <option value="ja">Ja</option>
-            <option value="nein">Nein</option>
+<select id="dreizehn">
 
-          </select>
+<option value="ja">Ja</option>
+<option value="nein">Nein</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Wohnsitz</label>
+<div>
 
-          <select id="wohnsitz" onchange="berechnen()">
+<label>Wohnsitz</label>
 
-            <option value="ch">Schweiz</option>
-            <option value="ausland">Ausland</option>
+<select id="wohnsitz">
 
-          </select>
+<option value="ch">Schweiz</option>
+<option value="ausland">Ausland</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Aufenthaltsbewilligung</label>
+<div>
 
-          <select id="bewilligung" onchange="berechnen()">
+<label>Aufenthaltsbewilligung</label>
 
-            <option value="c">C – Niederlassungsbewilligung</option>
-            <option value="b">B – Aufenthaltsbewilligung</option>
-            <option value="l">L – Kurzaufenthalt</option>
-            <option value="g">G – Grenzgänger</option>
-            <option value="andere">Andere / keine</option>
+<select id="bewilligung">
 
-          </select>
+<option value="c">C – Niederlassungsbewilligung</option>
+<option value="b">B – Aufenthaltsbewilligung</option>
+<option value="l">L – Kurzaufenthalt</option>
+<option value="g">G – Grenzgänger</option>
+<option value="andere">Andere</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Quellensteuer</label>
+<div>
 
-          <select id="quellensteuer" onchange="berechnen()">
+<label>Quellensteuer</label>
 
-            <option value="nein">Nein</option>
-            <option value="ja">Ja</option>
+<select id="quellensteuer">
 
-          </select>
+<option value="nein">Nein</option>
+<option value="ja">Ja</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>Kirchensteuer</label>
+<div>
 
-          <select id="kirche" onchange="berechnen()">
+<label>Kirchensteuer</label>
 
-            <option value="nein">Nein</option>
-            <option value="ja">Ja</option>
+<select id="kirche">
 
-          </select>
+<option value="nein">Nein</option>
+<option value="ja">Ja</option>
 
-        </div>
+</select>
 
+</div>
 
-        <div class="field">
 
-          <label>NBU-Prämie Arbeitnehmer</label>
+<div>
 
-          <select id="nbu" onchange="berechnen()">
+<label>NBU-Prämie Arbeitnehmer</label>
 
-            <option value="1">1.0 %</option>
-            <option value="1.2">1.2 %</option>
-            <option value="1.5">1.5 %</option>
-            <option value="0">Keine</option>
+<select id="nbu">
 
-          </select>
+<option value="1">1.0 %</option>
+<option value="1.2">1.2 %</option>
+<option value="1.5">1.5 %</option>
 
-        </div>
+</select>
 
+</div>
 
-      </div>
+</div>
 
 
-      <button onclick="berechnen()">
-        Nettolohn berechnen
-      </button>
+<button onclick="berechnen()">
+Nettolohn berechnen
+</button>
 
 
-      <div id="steuerHinweis" class="info hidden">
-        Die Quellensteuer wird in der nächsten Berechnungsstufe anhand
-        des offiziellen kantonalen Tarifs 2026 berechnet.
-      </div>
+<div id="qstHinweis" class="info" style="display:none">
 
+<strong>Quellensteuer:</strong><br>
+Die Quellensteuer wird kantonal nach Tarifcode und
+persönlicher Situation berechnet. Die offiziellen
+2026-Tarifdaten werden in einer kommenden Datenversion
+direkt integriert. Bis dahin wird hier kein erfundener
+Pauschalsatz verwendet.
 
-      <div class="footer-note">
+</div>
 
-        Die Berechnung dient als Orientierung. Die effektive Lohnabrechnung
-        kann insbesondere wegen Pensionskasse, NBU-Prämie, Quellensteuer,
-        Abzügen und individuellen Arbeitgeberregelungen abweichen.
 
-      </div>
+<div class="disclaimer">
 
-    </section>
+<strong>Hinweis / Haftungsausschluss</strong><br><br>
 
+Die auf RechnerSchweiz.ch angezeigten Werte sind
+unverbindliche Referenz- und Schätzbeträge und stellen
+keine verbindliche Lohnabrechnung, Steuerberechnung,
+Rechtsberatung oder Finanzberatung dar.
 
+Die tatsächliche Auszahlung kann insbesondere aufgrund
+der individuellen Pensionskasse, NBU-Prämie,
+Quellensteuer, kantonaler Regelungen, Arbeitgeber-
+bedingungen und weiterer persönlicher Faktoren abweichen.
 
-    <!-- ERGEBNIS -->
+Trotz sorgfältiger Aufbereitung können Fehler oder
+Änderungen der gesetzlichen Grundlagen nicht
+ausgeschlossen werden.
 
-    <aside class="result-card">
+Für die Richtigkeit, Vollständigkeit und Aktualität
+der Berechnung wird keine Gewähr übernommen.
 
-      <div class="result-label">
-        Geschätzter Nettolohn pro Monat
-      </div>
+Massgebend sind die individuelle Lohnabrechnung sowie
+die Angaben der zuständigen Behörden, Versicherungen,
+Pensionskassen und Arbeitgeber.
 
-      <div id="netto" class="netto">
-        CHF 0
-      </div>
+</div>
 
+</section>
 
-      <div class="result-row">
-        <span>Bruttolohn</span>
-        <strong id="rBrutto">CHF 0</strong>
-      </div>
 
+<aside class="result-card">
 
-      <div class="result-row">
-        <span>AHV / IV / EO</span>
-        <strong id="rAHV" class="minus">– CHF 0</strong>
-      </div>
+<div class="result-label">
+Geschätzter Nettolohn pro Monat
+</div>
 
+<div id="netto" class="netto">
+CHF 0
+</div>
 
-      <div class="result-row">
-        <span>ALV</span>
-        <strong id="rALV" class="minus">– CHF 0</strong>
-      </div>
 
+<div class="result-row">
+<span>Bruttolohn</span>
+<strong id="rBrutto">CHF 0</strong>
+</div>
 
-      <div class="result-row">
-        <span>NBU</span>
-        <strong id="rNBU" class="minus">– CHF 0</strong>
-      </div>
 
+<div class="result-row">
+<span>AHV / IV / EO</span>
+<strong id="rAHV" class="minus">– CHF 0</strong>
+</div>
 
-      <div class="result-row">
-        <span>BVG / Pensionskasse</span>
-        <strong id="rPK" class="minus">– CHF 0</strong>
-      </div>
 
+<div class="result-row">
+<span>ALV</span>
+<strong id="rALV" class="minus">– CHF 0</strong>
+</div>
 
-      <div class="result-row">
-        <span>Quellensteuer</span>
-        <strong id="rSteuer" class="minus">– CHF 0</strong>
-      </div>
 
+<div class="result-row">
+<span>NBU</span>
+<strong id="rNBU" class="minus">– CHF 0</strong>
+</div>
 
-      <div class="total">
 
-        <span>Netto</span>
+<div class="result-row">
+<span>BVG / Pensionskasse</span>
+<strong id="rPK" class="minus">– CHF 0</strong>
+</div>
 
-        <span id="rNetto">
-          CHF 0
-        </span>
 
-      </div>
+<div class="result-row">
+<span>Quellensteuer</span>
+<strong id="rSteuer" class="minus">– CHF 0</strong>
+</div>
 
-    </aside>
 
-  </div>
+<div class="total">
+
+<span>Netto</span>
+
+<span id="rNetto">
+CHF 0
+</span>
+
+</div>
+
+</aside>
+
+</div>
 
 </main>
 
@@ -568,212 +573,228 @@ button:hover {
 <script>
 
 
-function chf(value) {
+function chf(value){
 
-  return "CHF " + Math.round(value).toLocaleString("de-CH");
+return "CHF " +
+Math.round(value).toLocaleString("de-CH");
 
 }
 
 
-function berechnen() {
+function berechnen(){
 
+const brutto =
+Number(document.getElementById("brutto").value) || 0;
 
-  const brutto =
-    Number(document.getElementById("brutto").value) || 0;
+const alter =
+Number(document.getElementById("alter").value) || 33;
 
+const nbuSatz =
+(Number(document.getElementById("nbu").value) || 0) / 100;
 
-  const alter =
-    Number(document.getElementById("alter").value) || 33;
+const qst =
+document.getElementById("quellensteuer").value === "ja";
 
 
-  const pensum =
-    Number(document.getElementById("pensum").value) || 100;
+/*
+AHV / IV / EO
+2026 Arbeitnehmeranteil:
+5.30 %
+*/
 
+const ahv =
+brutto * 0.053;
 
-  const kinder =
-    Number(document.getElementById("kinder").value) || 0;
 
+/*
+ALV
+2026:
+1.10 % bis CHF 148'200 Jahreslohn
+*/
 
-  const quellensteuer =
-    document.getElementById("quellensteuer").value === "ja";
+const alv =
+Math.min(brutto,148200/12) * 0.011;
 
 
-  const nbuSatz =
-    Number(document.getElementById("nbu").value) / 100;
+/*
+NBU
+Der tatsächliche Satz hängt vom
+Versicherungsvertrag ab.
+*/
 
+const nbu =
+Math.min(brutto,148200/12) * nbuSatz;
 
-  /*
-   * AHV / IV / EO
-   *
-   * Arbeitnehmeranteil 2026:
-   * 5.3 %
-   */
 
-  const ahv = brutto * 0.053;
+/*
+BVG
 
+Mindestgrenze 2026:
+CHF 22'680
 
-  /*
-   * ALV
-   *
-   * 1.1 % bis zum versicherten Jahresmaximum
-   * von CHF 148'200.
-   */
+Koordinationsabzug:
+CHF 26'460
 
-  const alv =
-    Math.min(brutto, 148200 / 12) * 0.011;
+Maximal versicherter Lohn:
+CHF 90'720
 
+Die effektive PK ist abhängig
+von der Pensionskasse.
 
-  /*
-   * NBU
-   *
-   * Individueller Prämiensatz.
-   */
+Hier verwenden wir deshalb
+eine transparente Orientierung.
+*/
 
-  const nbu =
-    brutto * nbuSatz;
 
+const jahreslohn =
+brutto * 12;
 
-  /*
-   * BVG
-   *
-   * Vereinfachte Berechnung des koordinierten Lohnes.
-   *
-   * Koordinationsabzug 2026:
-   * CHF 26'460 pro Jahr.
-   *
-   * Die effektive PK-Prämie hängt von der
-   * jeweiligen Pensionskasse ab.
-   */
 
-  let pk = 0;
+let pk = 0;
 
 
-  if (alter >= 25 && brutto * 12 >= 22680) {
+if(
+alter >= 25 &&
+jahreslohn >= 22680
+){
 
+const koordinierterLohn =
+Math.min(
+Math.max(
+jahreslohn - 26460,
+0
+),
+90720
+);
 
-    const jahreslohn = brutto * 12;
 
+let altersgutschrift;
 
-    const koordinationsabzug = 26460;
 
+if(alter < 35){
 
-    let koordinierterLohn =
-      Math.max(
-        0,
-        Math.min(jahreslohn, 907200)
-        - koordinationsabzug
-      );
+altersgutschrift = 0.05;
 
+}
+else if(alter < 45){
 
-    /*
-     * Altersgutschrift als grobe Orientierung.
-     */
+altersgutschrift = 0.07;
 
-    let pkSatz = 0.05;
+}
+else if(alter < 55){
 
+altersgutschrift = 0.10;
 
-    if (alter >= 35 && alter < 45) {
-      pkSatz = 0.07;
-    }
+}
+else{
 
-    else if (alter >= 45 && alter < 55) {
-      pkSatz = 0.10;
-    }
+altersgutschrift = 0.14;
 
-    else if (alter >= 55) {
-      pkSatz = 0.14;
-    }
+}
 
 
-    /*
-     * Nur Arbeitnehmerhälfte als Näherung.
-     */
+/*
+Arbeitnehmeranteil als
+vereinfachte Orientierung:
+50 % der Altersgutschrift.
+*/
 
-    pk =
-      (koordinierterLohn * pkSatz / 2) / 12;
+pk =
+koordinierterLohn *
+altersgutschrift *
+0.50 /
+12;
 
-  }
+}
 
 
-  /*
-   * Quellensteuer
-   *
-   * Noch bewusst NICHT pauschal erfunden.
-   *
-   * Die offizielle ESTV stellt für 2026
-   * kantonale Tariftabellen bereit.
-   */
+/*
+Quellensteuer
 
-  let steuer = 0;
+KEIN erfundener Pauschalsatz.
 
+Die offiziellen Tarife werden
+separat integriert.
+*/
 
-  if (quellensteuer) {
+let steuer = 0;
 
-    document
-      .getElementById("steuerHinweis")
-      .classList.remove("hidden");
 
-  }
+if(qst){
 
-  else {
+document.getElementById(
+"qstHinweis"
+).style.display="block";
 
-    document
-      .getElementById("steuerHinweis")
-      .classList.add("hidden");
+}
+else{
 
-  }
+document.getElementById(
+"qstHinweis"
+).style.display="none";
 
+}
 
-  /*
-   * Nettolohn
-   */
 
-  const netto =
-    Math.max(
-      0,
-      brutto
-      - ahv
-      - alv
-      - nbu
-      - pk
-      - steuer
-    );
+/*
+Netto
+*/
 
+const netto =
+Math.max(
+0,
+brutto
+-ahv
+-alv
+-nbu
+-pk
+-steuer
+);
 
-  /*
-   * Ausgabe
-   */
 
-  document.getElementById("netto").textContent =
-    chf(netto);
+/*
+Ausgabe
+*/
 
+document.getElementById(
+"netto"
+).textContent =
+chf(netto);
 
-  document.getElementById("rBrutto").textContent =
-    chf(brutto);
+document.getElementById(
+"rBrutto"
+).textContent =
+chf(brutto);
 
+document.getElementById(
+"rAHV"
+).textContent =
+"– " + chf(ahv);
 
-  document.getElementById("rAHV").textContent =
-    "– " + chf(ahv);
+document.getElementById(
+"rALV"
+).textContent =
+"– " + chf(alv);
 
+document.getElementById(
+"rNBU"
+).textContent =
+"– " + chf(nbu);
 
-  document.getElementById("rALV").textContent =
-    "– " + chf(alv);
+document.getElementById(
+"rPK"
+).textContent =
+"– " + chf(pk);
 
+document.getElementById(
+"rSteuer"
+).textContent =
+"– " + chf(steuer);
 
-  document.getElementById("rNBU").textContent =
-    "– " + chf(nbu);
-
-
-  document.getElementById("rPK").textContent =
-    "– " + chf(pk);
-
-
-  document.getElementById("rSteuer").textContent =
-    "– " + chf(steuer);
-
-
-  document.getElementById("rNetto").textContent =
-    chf(netto);
+document.getElementById(
+"rNetto"
+).textContent =
+chf(netto);
 
 }
 
