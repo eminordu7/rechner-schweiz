@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lohnrechner Schweiz 2026 – Brutto Netto Rechner</title>
+
+<meta name="description" content="Lohnrechner Schweiz 2026: Bruttolohn, Sozialabzüge, Pensionskasse, Familienzulagen und Spesen berechnen.">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#17202a}
+.header{background:#111827;color:#fff;padding:22px 20px}
+.header-inner{max-width:1100px;margin:auto}
+.logo{font-size:21px;font-weight:800}.logo span{color:#ff3b30}
+.container{max-width:1100px;margin:35px auto;padding:0 18px}
+.hero{margin-bottom:25px}.hero h1{font-size:38px;margin:0 0 10px}
+.hero p{color:#667085;font-size:17px;line-height:1.5}
+.layout{display:grid;grid-template-columns:1fr 390px;gap:25px}
+.card,.result-card{border-radius:18px;box-shadow:0 5px 25px rgba(0,0,0,.06)}
+.card{background:#fff;padding:28px}.card h2{margin-top:0}
+.section{margin:25px 0 8px;font-size:14px;font-weight:800;color:#667085;text-transform:uppercase;letter-spacing:.5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+label{display:block;font-size:14px;font-weight:700;margin-bottom:7px}
+input,select{width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:13px;font-size:16px;background:#fff}
+input:focus,select:focus{outline:2px solid #ff3b30;border-color:#ff3b30}
+button{width:100%;border:0;border-radius:11px;padding:16px;margin-top:22px;background:#ff3b30;color:#fff;font-size:17px;font-weight:800;cursor:pointer}
+button:hover{background:#df2d25}
+.result-card{background:#111827;color:#fff;padding:28px;position:sticky;top:20px}
+.result-label{color:#aeb7c5;font-size:14px}
+.netto{font-size:40px;font-weight:900;margin:7px 0 5px}
+.payout{font-size:15px;color:#aeb7c5;margin-bottom:22px}
+.result-row{display:flex;justify-content:space-between;gap:15px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:15px}
+.minus{color:#ffb4ae}.plus{color:#a7f3d0}
+.total{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2);display:flex;justify-content:space-between;font-weight:800}
+.info{background:#fff7ed;color:#7c4a03;border-radius:10px;padding:14px;font-size:13px;line-height:1.5;margin-top:18px}
+.disclaimer{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-top:25px;font-size:13px;line-height:1.6;color:#596579}
+.hidden{display:none}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.result-card{position:static}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}.netto{font-size:34px}}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="header-inner">
+<div class="logo">Rechner<span>Schweiz</span></div>
+</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>Lohnrechner Schweiz 2026</h1>
+<p>Bruttolohn eingeben und den voraussichtlichen Nettolohn sowie die Auszahlung inklusive Familienzulagen und Spesen berechnen.</p>
+</section>
+
+<div class="layout">
+
+<section class="card">
+
+<h2>Deine Angaben</h2>
+
+<div class="section">Lohn</div>
+
+<div class="grid">
+
+<div>
+<label>Bruttolohn pro Monat</label>
+<input id="brutto" type="number" value="11250" min="0" step="50" oninput="berechnen()">
+</div>
+
+<div>
+<label>13. Monatslohn</label>
+<select id="dreizehn">
+<option value="nein">Nein</option>
+<option value="ja">Ja</option>
+</select>
+</div>
+
+<div>
+<label>Beschäftigungsgrad</label>
+<input id="pensum" type="number" value="100" min="1" max="100">
+</div>
+
+<div>
+<label>Alter</label>
+<input id="alter" type="number" value="33" min="16" max="80">
+</div>
+
+</div>
+
+<div class="section">Persönliche Situation</div>
+
+<div class="grid">
+
+<div>
+<label>Kanton</label>
+<select id="kanton" onchange="berechnen()">
+<option value="AG">Aargau</option>
+<option value="AI">Appenzell Innerrhoden</option>
+<option value="AR">Appenzell Ausserrhoden</option>
+<option value="BE">Bern</option>
+<option value="BL">Basel-Landschaft</option>
+<option value="BS">Basel-Stadt</option>
+<option value="FR">Freiburg</option>
+<option value="GE">Genf</option>
+<option value="GL">Glarus</option>
+<option value="GR">Graubünden</option>
+<option value="JU">Jura</option>
+<option value="LU">Luzern</option>
+<option value="NE">Neuenburg</option>
+<option value="NW">Nidwalden</option>
+<option value="OW">Obwalden</option>
+<option value="SG" selected>St. Gallen</option>
+<option value="SH">Schaffhausen</option>
+<option value="SO">Solothurn</option>
+<option value="SZ">Schwyz</option>
+<option value="TG">Thurgau</option>
+<option value="TI">Tessin</option>
+<option value="UR">Uri</option>
+<option value="VD">Waadt</option>
+<option value="VS">Wallis</option>
+<option value="ZG">Zug</option>
+<option value="ZH">Zürich</option>
+</select>
+</div>
+
+<div>
+<label>Zivilstand</label>
+<select id="zivilstand">
+<option value="ledig">Ledig</option>
+<option value="verheiratet" selected>Verheiratet</option>
+</select>
+</div>
+
+<div>
+<label>Anzahl Kinder</label>
+<input id="kinder" type="number" value="2" min="0" max="10" oninput="berechnen()">
+</div>
+
+<div>
+<label>Davon in Ausbildung</label>
+<input id="ausbildung" type="number" value="0" min="0" max="10" oninput="berechnen()">
+</div>
+
+<div>
+<label>Wohnsitz</label>
+<select id="wohnsitz">
+<option value="ch">Schweiz</option>
+<option value="ausland">Ausland</option>
+</select>
+</div>
+
+<div>
+<label>Bewilligung</label>
+<select id="bewilligung">
+<option value="c">C – Niederlassungsbewilligung</option>
+<option value="b">B – Aufenthaltsbewilligung</option>
+<option value="l">L – Kurzaufenthalt</option>
+<option value="g">G – Grenzgänger</option>
+<option value="andere">Andere</option>
+</select>
+</div>
+
+<div>
+<label>Quellensteuerpflichtig?</label>
+<select id="quellensteuer" onchange="berechnen()">
+<option value="nein">Nein</option>
+<option value="ja">Ja</option>
+</select>
+</div>
+
+<div>
+<label>Kirchensteuer</label>
+<select id="kirche">
+<option value="nein">Nein</option>
+<option value="ja">Ja</option>
+</select>
+</div>
+
+</div>
+
+<div class="section">Zusätzliche Auszahlung</div>
+
+<div class="grid">
+
+<div>
+<label>Spesen pro Monat</label>
+<input id="spesen" type="number" value="1000" min="0" step="50" oninput="berechnen()">
+</div>
+
+</div>
+
+<div class="section">Individuelle Abzüge</div>
+
+<div class="grid">
+
+<div>
+<label>NBU Arbeitnehmer (%)</label>
+<input id="nbu" type="number" value="1.0" min="0" max="5" step="0.1" oninput="berechnen()">
+</div>
+
+<div>
+<label>PK Arbeitnehmer pro Monat</label>
+<input id="pk" type="number" value="500" min="0" step="10" oninput="berechnen()">
+</div>
+
+</div>
+
+<button onclick="berechnen()">Nettolohn berechnen</button>
+
+<div id="qstInfo" class="info hidden">
+<strong>Quellensteuer:</strong><br>
+Die exakte Quellensteuer hängt vom kantonalen Tarifcode ab. Die offiziellen 2026-Tarifdateien werden separat integriert.
+</div>
+
+<div class="disclaimer">
+<strong>Hinweis / Haftungsausschluss</strong><br><br>
+Die auf RechnerSchweiz.ch ausgewiesenen Beträge sind unverbindliche Referenz- und Schätzwerte. Sie stellen keine verbindliche Lohnabrechnung, Steuerberechnung, Rechtsberatung oder Finanzberatung dar.
+<br><br>
+Die tatsächliche Auszahlung kann insbesondere aufgrund der individuellen Pensionskasse, NBU-Prämie, Quellensteuer, Familienzulagen, Arbeitgeberregelungen und weiterer persönlicher Faktoren abweichen.
+<br><br>
+Trotz sorgfältiger Aufbereitung können Fehler oder Änderungen gesetzlicher Grundlagen nicht ausgeschlossen werden. Für Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen.
+</div>
+
+</section>
+
+<aside class="result-card">
+
+<div class="result-label">Nettolohn pro Monat</div>
+<div id="netto" class="netto">CHF 0</div>
+<div class="payout">Voraussichtliche Auszahlung: <strong id="auszahlung">CHF 0</strong></div>
+
+<div class="result-row"><span>Bruttolohn</span><strong id="rBrutto">CHF 0</strong></div>
+<div class="result-row"><span>AHV / IV / EO</span><strong id="rAHV" class="minus">– CHF 0</strong></div>
+<div class="result-row"><span>ALV</span><strong id="rALV" class="minus">– CHF 0</strong></div>
+<div class="result-row"><span>NBU</span><strong id="rNBU" class="minus">– CHF 0</strong></div>
+<div class="result-row"><span>BVG / Pensionskasse</span><strong id="rPK" class="minus">– CHF 0</strong></div>
+<div class="result-row"><span>Quellensteuer</span><strong id="rSteuer" class="minus">– CHF 0</strong></div>
+<div class="result-row"><span>Familienzulagen</span><strong id="rZulage" class="plus">+ CHF 0</strong></div>
+<div class="result-row"><span>Spesen</span><strong id="rSpesen" class="plus">+ CHF 0</strong></div>
+
+<div class="total">
+<span>Auszahlung</span>
+<span id="rAuszahlung">CHF 0</span>
+</div>
+
+</aside>
+
+</div>
+</main>
+
+<script>
+
+/*
+=========================================================
+FAMILIENZULAGEN 2026
+=========================================================
+
+Kinderzulage und Ausbildungszulage pro Kind/Monat.
+
+Die Werte sind als kantonale Mindestansätze gedacht.
+Bei Arbeitgebern mit höherer Familienzulage kann der
+effektive Betrag abweichen.
+*/
+
+const familienzulagen = {
+
+AG:{kind:215,ausbildung:268},
+AI:{kind:230,ausbildung:280},
+AR:{kind:225,ausbildung:300},
+BE:{kind:250,ausbildung:310},
+BL:{kind:215,ausbildung:268},
+BS:{kind:275,ausbildung:325},
+FR:{kind:265,ausbildung:325},
+GE:{kind:311,ausbildung:415},
+GL:{kind:200,ausbildung:300},
+GR:{kind:230,ausbildung:300},
+JU:{kind:275,ausbildung:325},
+LU:{kind:215,ausbildung:268},
+NE:{kind:220,ausbildung:300},
+NW:{kind:240,ausbildung:320},
+OW:{kind:220,ausbildung:270},
+SG:{kind:245,ausbildung:298},
+SH:{kind:230,ausbildung:290},
+SO:{kind:255,ausbildung:280},
+SZ:{kind:230,ausbildung:280},
+TG:{kind:215,ausbildung:280},
+TI:{kind:215,ausbildung:268},
+UR:{kind:240,ausbildung:300},
+VD:{kind:322,ausbildung:425},
+VS:{kind:305,ausbildung:445},
+ZG:{kind:330,ausbildung:330},
+ZH:{kind:200,ausbildung:268}
+
+};
+
+
+function chf(v){
+
+return "CHF " + Math.round(v).toLocaleString("de-CH");
+
+}
+
+
+function berechnen(){
+
+const brutto =
+Number(document.getElementById("brutto").value)||0;
+
+const alter =
+Number(document.getElementById("alter").value)||33;
+
+const kinder =
+Number(document.getElementById("kinder").value)||0;
+
+let ausbildung =
+Number(document.getElementById("ausbildung").value)||0;
+
+const kanton =
+document.getElementById("kanton").value;
+
+const nbuSatz =
+(Number(document.getElementById("nbu").value)||0)/100;
+
+const pk =
+Number(document.getElementById("pk").value)||0;
+
+const spesen =
+Number(document.getElementById("spesen").value)||0;
+
+const qst =
+document.getElementById("quellensteuer").value==="ja";
+
+
+/*
+Ausbildungs-Kinder können natürlich nicht
+grösser sein als die Gesamtzahl Kinder.
+*/
+
+ausbildung=Math.min(ausbildung,kinder);
+
+
+/*
+=========================================================
+SOZIALVERSICHERUNGEN
+=========================================================
+*/
+
+
+/* AHV / IV / EO 2026 */
+
+const ahv=brutto*0.053;
+
+
+/* ALV 2026 */
+
+const alv=Math.min(
+brutto,
+148200/12
+)*0.011;
+
+
+/* NBU */
+
+const nbu=Math.min(
+brutto,
+148200/12
+)*nbuSatz;
+
+
+/*
+=========================================================
+FAMILIENZULAGEN
+=========================================================
+*/
+
+const tarif =
+familienzulagen[kanton] ||
+familienzulagen.SG;
+
+
+/*
+Kinder ohne Ausbildung
+*/
+
+const normaleKinder =
+Math.max(
+0,
+kinder-ausbildung
+);
+
+
+/*
+Monatliche Familienzulagen
+*/
+
+const kinderzulage =
+normaleKinder*tarif.kind;
+
+const ausbildungszulage =
+ausbildung*tarif.ausbildung;
+
+const familienzulage =
+kinderzulage+ausbildungszulage;
+
+
+/*
+=========================================================
+QUELLENSTEUER
+=========================================================
+*/
+
+let steuer=0;
+
+if(qst){
+
+document
+.getElementById("qstInfo")
+.classList.remove("hidden");
+
+}else{
+
+document
+.getElementById("qstInfo")
+.classList.add("hidden");
+
+}
+
+
+/*
+=========================================================
+NETTO
+=========================================================
+*/
+
+const netto=Math.max(
+0,
+brutto
+-ahv
+-alv
+-nbu
+-pk
+-steuer
+);
+
+
+/*
+Familienzulagen und Spesen werden separat
+zur Auszahlung addiert.
+*/
+
+const auszahlung =
+netto
++familienzulage
++spesen;
+
+
+/*
+=========================================================
+AUSGABE
+=========================================================
+*/
+
+document.getElementById("netto").textContent =
+chf(netto);
+
+document.getElementById("auszahlung").textContent =
+chf(auszahlung);
+
+document.getElementById("rBrutto").textContent =
+chf(brutto);
+
+document.getElementById("rAHV").textContent =
+"– "+chf(ahv);
+
+document.getElementById("rALV").textContent =
+"– "+chf(alv);
+
+document.getElementById("rNBU").textContent =
+"– "+chf(nbu);
+
+document.getElementById("rPK").textContent =
+"– "+chf(pk);
+
+document.getElementById("rSteuer").textContent =
+"– "+chf(steuer);
+
+document.getElementById("rZulage").textContent =
+"+ "+chf(familienzulage);
+
+document.getElementById("rSpesen").textContent =
+"+ "+chf(spesen);
+
+document.getElementById("rAuszahlung").textContent =
+chf(auszahlung);
+
+}
+
+
+berechnen();
+
+</script>
+
+</body>
+</html>
