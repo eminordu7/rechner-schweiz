@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lohnrechner Schweiz – Brutto Netto berechnen</title>
+  <meta name="description" content="Lohnrechner Schweiz: Bruttolohn in Nettolohn umrechnen. AHV, ALV, Pensionskasse und Quellensteuer berücksichtigen.">
+</head>
+
+<body>
+
+<h1>Lohnrechner Schweiz</h1>
+
+<p>Berechne deinen ungefähren Nettolohn aus dem Bruttolohn.</p>
+
+<label>Bruttolohn pro Monat (CHF)</label><br>
+<input type="number" id="brutto" value="10000"><br><br>
+
+<label>Kanton</label><br>
+<select id="kanton">
+  <option>AG</option>
+  <option>AI</option>
+  <option>AR</option>
+  <option>BE</option>
+  <option>BL</option>
+  <option>BS</option>
+  <option>FR</option>
+  <option>GE</option>
+  <option>GL</option>
+  <option>GR</option>
+  <option>JU</option>
+  <option>LU</option>
+  <option>NE</option>
+  <option>NW</option>
+  <option>OW</option>
+  <option selected>SG</option>
+  <option>SH</option>
+  <option>SO</option>
+  <option>SZ</option>
+  <option>TG</option>
+  <option>TI</option>
+  <option>UR</option>
+  <option>VD</option>
+  <option>VS</option>
+  <option>ZG</option>
+  <option>ZH</option>
+</select><br><br>
+
+<label>Alter</label><br>
+<input type="number" id="alter" value="33"><br><br>
+
+<label>Beschäftigungsgrad (%)</label><br>
+<input type="number" id="pensum" value="100"><br><br>
+
+<label>Zivilstand</label><br>
+<select id="zivilstand">
+  <option value="ledig">Ledig</option>
+  <option value="verheiratet">Verheiratet</option>
+</select><br><br>
+
+<label>Anzahl Kinder</label><br>
+<input type="number" id="kinder" value="0"><br><br>
+
+<label>13. Monatslohn</label><br>
+<select id="monatslohn">
+  <option value="ja">Ja</option>
+  <option value="nein">Nein</option>
+</select><br><br>
+
+<label>Quellensteuerpflichtig?</label><br>
+<select id="quellensteuer">
+  <option value="nein">Nein</option>
+  <option value="ja">Ja</option>
+</select><br><br>
+
+<label>Kirchensteuer</label><br>
+<select id="kirche">
+  <option value="nein">Nein</option>
+  <option value="ja">Ja</option>
+</select><br><br>
+
+<button onclick="berechnen()">Nettolohn berechnen</button>
+
+<hr>
+
+<h2>Ergebnis</h2>
+
+<p>Bruttolohn: <strong id="ausgabeBrutto">CHF 0</strong></p>
+<p>AHV / IV / EO: <strong id="ausgabeAHV">CHF 0</strong></p>
+<p>ALV: <strong id="ausgabeALV">CHF 0</strong></p>
+<p>NBU: <strong id="ausgabeNBU">CHF 0</strong></p>
+<p>Pensionskasse: <strong id="ausgabePK">CHF 0</strong></p>
+<p>Quellensteuer: <strong id="ausgabeSteuer">CHF 0</strong></p>
+
+<h2>Nettolohn: <span id="ausgabeNetto">CHF 0</span></h2>
+
+<script>
+
+function geld(wert) {
+  return "CHF " + Math.round(wert).toLocaleString("de-CH");
+}
+
+function berechnen() {
+
+  const brutto = Number(document.getElementById("brutto").value);
+  const alter = Number(document.getElementById("alter").value);
+  const pensum = Number(document.getElementById("pensum").value);
+  const kinder = Number(document.getElementById("kinder").value);
+
+  const quellensteuer =
+    document.getElementById("quellensteuer").value === "ja";
+
+  /*
+   * AHV / IV / EO
+   * Vereinfachte Berechnung für den ersten Prototyp.
+   */
+  const ahv = brutto * 0.053;
+
+  /*
+   * ALV
+   * Vereinfachter Arbeitnehmeranteil.
+   */
+  const alv = Math.min(brutto, 11000) * 0.011;
+
+  /*
+   * NBU
+   * Richtwert. Später können wir den effektiven
+   * Prämiensatz individuell einstellen.
+   */
+  const nbu = brutto * 0.01;
+
+  /*
+   * Pensionskasse
+   * Altersabhängiger vereinfachter Arbeitnehmeranteil.
+   */
+  let pkSatz = 0;
+
+  if (alter < 25) {
+    pkSatz = 0;
+  } else if (alter < 35) {
+    pkSatz = 0.05;
+  } else if (alter < 45) {
+    pkSatz = 0.07;
+  } else if (alter < 55) {
+    pkSatz = 0.10;
+  } else {
+    pkSatz = 0.14;
+  }
+
+  const pk = brutto * pkSatz;
+
+  /*
+   * Quellensteuer
+   *
+   * NOCH NICHT DIE FINALE TARIFLOGIK.
+   * Diese wird als nächstes anhand der offiziellen
+   * Schweizer Quellensteuertabellen eingebaut.
+   */
+  let steuer = 0;
+
+  if (quellensteuer) {
+
+    const jahreslohn = brutto * 12;
+
+    let satz = 0;
+
+    if (jahreslohn <= 60000) {
+      satz = 0.04;
+    } else if (jahreslohn <= 90000) {
+      satz = 0.07;
+    } else if (jahreslohn <= 120000) {
+      satz = 0.10;
+    } else if (jahreslohn <= 180000) {
+      satz = 0.13;
+    } else {
+      satz = 0.16;
+    }
+
+    satz -= kinder * 0.01;
+
+    if (satz < 0) {
+      satz = 0;
+    }
+
+    steuer = brutto * satz;
+  }
+
+  const netto =
+    brutto
+    - ahv
+    - alv
+    - nbu
+    - pk
+    - steuer;
+
+  document.getElementById("ausgabeBrutto").textContent = geld(brutto);
+  document.getElementById("ausgabeAHV").textContent = geld(ahv);
+  document.getElementById("ausgabeALV").textContent = geld(alv);
+  document.getElementById("ausgabeNBU").textContent = geld(nbu);
+  document.getElementById("ausgabePK").textContent = geld(pk);
+  document.getElementById("ausgabeSteuer").textContent = geld(steuer);
+  document.getElementById("ausgabeNetto").textContent = geld(netto);
+}
+
+berechnen();
+
+</script>
+
+</body>
+</html>
