@@ -1,0 +1,267 @@
+```html
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RechnerSchweiz – Schweizer Rechner online</title>
+<meta name="description" content="Kostenlose Rechner für die Schweiz. Lohn, Steuern, Hypothek, Kredit, Auto, Solar und mehr.">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#f4f6f8;
+color:#17202a;
+}
+
+.header{
+background:#111827;
+color:white;
+padding:22px 20px;
+}
+
+.header-inner{
+max-width:1100px;
+margin:auto;
+}
+
+.logo{
+font-size:21px;
+font-weight:800;
+}
+
+.logo span{
+color:#ff3b30;
+}
+
+.container{
+max-width:1100px;
+margin:0 auto;
+padding:55px 20px;
+}
+
+.hero{
+text-align:center;
+margin-bottom:45px;
+}
+
+.hero h1{
+font-size:44px;
+margin:0 0 15px;
+}
+
+.hero h1 span{
+color:#ff3b30;
+}
+
+.hero p{
+font-size:18px;
+color:#667085;
+line-height:1.6;
+max-width:700px;
+margin:auto;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:22px;
+}
+
+.card{
+background:white;
+border-radius:18px;
+padding:27px;
+box-shadow:0 5px 25px rgba(0,0,0,.06);
+transition:.2s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(0,0,0,.10);
+}
+
+.icon{
+font-size:32px;
+margin-bottom:18px;
+}
+
+.card h2{
+font-size:21px;
+margin:0 0 9px;
+}
+
+.card p{
+color:#667085;
+line-height:1.5;
+font-size:14px;
+min-height:63px;
+}
+
+.button{
+display:inline-block;
+background:#ff3b30;
+color:white;
+text-decoration:none;
+padding:12px 18px;
+border-radius:10px;
+font-weight:800;
+font-size:14px;
+}
+
+.coming{
+background:#f2f4f7;
+color:#667085;
+cursor:default;
+}
+
+.section-title{
+font-size:14px;
+font-weight:800;
+text-transform:uppercase;
+letter-spacing:.6px;
+color:#667085;
+margin:0 0 18px;
+}
+
+footer{
+text-align:center;
+color:#98a2b3;
+font-size:13px;
+padding:30px 20px 45px;
+}
+
+@media(max-width:850px){
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+}
+
+@media(max-width:600px){
+.container{
+padding-top:40px;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<div class="header-inner">
+<div class="logo">Rechner<span>Schweiz</span></div>
+</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>Rechner<span>Schweiz</span></h1>
+
+<p>
+Kostenlose Rechner für die Schweiz – einfach, schnell und verständlich.
+Wähle einen Rechner und berechne dein Ergebnis direkt online.
+</p>
+</section>
+
+<div class="section-title">
+Unsere Rechner
+</div>
+
+<section class="grid">
+
+<div class="card">
+<div class="icon">💰</div>
+<h2>Lohnrechner Schweiz</h2>
+<p>
+Bruttolohn in Nettolohn umrechnen – inklusive Sozialabzüge,
+Pensionskasse, Familienzulagen und Spesen.
+</p>
+<a class="button" href="lohnrechner.html">
+Lohn berechnen →
+</a>
+</div>
+
+<div class="card">
+<div class="icon">🏠</div>
+<h2>Hypothekenrechner</h2>
+<p>
+Berechne Hypothekarzinsen, monatliche Belastung und
+Tragbarkeit beim Immobilienkauf.
+</p>
+<span class="button coming">
+Demnächst
+</span>
+</div>
+
+<div class="card">
+<div class="icon">🧾</div>
+<h2>Steuerrechner Schweiz</h2>
+<p>
+Schätze deine Steuerbelastung anhand von Einkommen,
+Kanton und persönlicher Situation.
+</p>
+<span class="button coming">
+Demnächst
+</span>
+</div>
+
+<div class="card">
+<div class="icon">🚗</div>
+<h2>Autokostenrechner</h2>
+<p>
+Berechne die tatsächlichen monatlichen Kosten deines
+Autos inklusive Versicherung, Treibstoff und Unterhalt.
+</p>
+<span class="button coming">
+Demnächst
+</span>
+</div>
+
+<div class="card">
+<div class="icon">💳</div>
+<h2>Kreditrechner</h2>
+<p>
+Berechne Monatsrate, Zinsen und Gesamtkosten eines
+Kredits in der Schweiz.
+</p>
+<span class="button coming">
+Demnächst
+</span>
+</div>
+
+<div class="card">
+<div class="icon">☀️</div>
+<h2>Solarrechner</h2>
+<p>
+Berechne Solarstrom, Eigenverbrauch, Einsparung und
+mögliche Amortisationsdauer.
+</p>
+<span class="button coming">
+Demnächst
+</span>
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 RechnerSchweiz · Kostenlose Schweizer Online-Rechner
+</footer>
+
+</body>
+</html>
+```
