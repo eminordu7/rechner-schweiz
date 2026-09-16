@@ -1,0 +1,79 @@
+name: SEO optimization
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  optimize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Optimize calculator pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re, html
+
+          base = 'https://eminordu7.github.io/rechner-schweiz'
+          pages = {
+            'leasing-vs-kauf.html': ('Leasing oder Kaufen in der Schweiz? Rechner', 'Leasing oder Kaufen in der Schweiz vergleichen: Fahrzeugpreis, Leasingzins, Laufzeit, Anzahlung und laufende Kosten transparent berechnen.', 'Leasing oder Kaufen in der Schweiz: Dieser Rechner vergleicht die berechneten Gesamtkosten eines Fahrzeugkaufs mit einem vereinfachten Leasingmodell.'),
+            'oev-vs-auto.html': ('ÖV oder Auto in der Schweiz? Kostenrechner', 'ÖV oder Auto in der Schweiz: jährliche Mobilitätskosten vergleichen und berechnen – mit Auto, Kilometerleistung und ÖV-Kosten.', 'ÖV oder Auto? Mit diesem Schweizer Kostenrechner kannst du deine jährlichen Kosten für Auto und öffentlichen Verkehr gegenüberstellen.'),
+            'elektro-vs-diesel-benzin.html': ('Elektroauto vs. Benzin oder Diesel: Kostenrechner', 'Elektroauto vs. Benzin oder Diesel: Energie- und Treibstoffkosten anhand von Verbrauch, Fahrleistung und Preisen vergleichen.', 'Elektroauto, Benzin oder Diesel? Vergleiche die laufenden Energie- und Treibstoffkosten anhand deiner eigenen Fahrleistung und Preise.'),
+            'auto-behalten-vs-neu.html': ('Auto behalten oder neues Auto kaufen? Rechner', 'Auto behalten oder neues Auto kaufen: Reparaturen, laufende Kosten und Restwert über mehrere Jahre vergleichen.', 'Soll das bestehende Auto behalten oder ersetzt werden? Der Rechner vergleicht erwartete Kosten und den Restwert über den gewählten Zeitraum.'),
+            'elektroauto-gesamtbetrieb.html': ('Elektroauto Gesamtkosten in der Schweiz berechnen', 'Elektroauto Gesamtkosten berechnen: Anschaffung, Strom, Versicherung, Wartung und weitere laufende Kosten vergleichen.', 'Berechne die jährlichen und gesamten Betriebskosten eines Elektroautos mit deinen eigenen Schweizer Kosten und Annahmen.'),
+            'solar-vs-strombezug.html': ('Solarstrom vs. Strombezug: PV-Amortisationsrechner Schweiz', 'Solarstrom vs. Netzstrom in der Schweiz: PV-Investition, Eigenverbrauch, Strompreis und Einspeisung vergleichen.', 'Wie schnell lohnt sich eine Photovoltaikanlage? Vergleiche Investition, Eigenverbrauch, Strombezug und Einspeisung in einem einfachen Modell.'),
+            'waermepumpe-vs-heizung.html': ('Wärmepumpe vs. Heizung: Amortisationsrechner Schweiz', 'Wärmepumpe vs. bestehende Heizung: Investition, Energieverbrauch und laufende Kosten für die Schweiz vergleichen.', 'Vergleiche die Investition und laufenden Energiekosten einer Wärmepumpe mit deiner bisherigen Heizung und berechne die einfache Amortisationsdauer.'),
+            'batterie-vs-keine-batterie.html': ('Batteriespeicher für PV: Batterie vs. keine Batterie', 'Batteriespeicher für Photovoltaik berechnen: Investition, Eigenverbrauch, Strompreis und Amortisationsdauer vergleichen.', 'Lohnt sich ein Batteriespeicher für deine PV-Anlage? Vergleiche Mehrkosten, zusätzlichen Eigenverbrauch und die einfache Amortisationsdauer.'),
+            'mieten-vs-kaufen.html': ('Mieten oder Kaufen in der Schweiz? Rechner', 'Mieten oder Kaufen in der Schweiz vergleichen: laufende Wohnkosten, Hypothekarzins und Unterhalt gegenüberstellen.', 'Mieten oder Kaufen? Dieser Rechner vergleicht die laufenden Wohnkosten in einem vereinfachten Modell und macht die verwendeten Annahmen transparent.'),
+            'angestellt-vs-selbststaendig.html': ('Angestellt oder selbstständig? Schweizer Rechner', 'Angestellt oder selbstständig in der Schweiz: notwendigen Umsatz und Kosten einer Selbstständigkeit überschlagen.', 'Vergleiche deinen heutigen Lohn mit dem benötigten Umsatz als Selbstständiger und berücksichtige dabei wichtige laufende Kosten.'),
+            'kaffee-rechner.html': ('Was kostet Kaffee? Kostenrechner Schweiz', 'Kaffeekosten berechnen: täglicher Kaffeekonsum auf Monats-, Jahres- und Mehrjahreskosten hochrechnen.', 'Ein täglicher Kaffee summiert sich über das Jahr. Berechne deine persönlichen Kaffeeausgaben über verschiedene Zeiträume.'),
+            'takeaway-vs-kochen.html': ('Take-away vs. selber kochen: Kostenrechner', 'Take-away oder selber kochen: Essenskosten über Woche, Monat und Jahr vergleichen.', 'Vergleiche die Kosten von Take-away und selber kochen anhand deiner Häufigkeit und durchschnittlichen Ausgaben.'),
+            'pizza-selbermachen-vs-bestellen.html': ('Pizza bestellen oder selber machen? Kostenrechner', 'Pizza bestellen oder selber machen: Zutaten, Lieferkosten und Zeitaufwand vergleichen.', 'Was kostet eine Pizza wirklich? Vergleiche Bestellen und Selbermachen inklusive der von dir angesetzten Kosten für Zeit und Zutaten.'),
+            'feierabendbier-rechner.html': ('Was kostet dein Feierabendbier? Rechner', 'Feierabendbier Kosten berechnen: tägliche oder wöchentliche Ausgaben auf ein Jahr und mehrere Jahre hochrechnen.', 'Berechne, wie viel dein Feierabendbier über einen Monat, ein Jahr oder mehrere Jahre kostet.'),
+            'dusche-kosten-rechner.html': ('Was kostet eine Dusche? Kostenrechner Schweiz', 'Duschkosten berechnen: Wasserverbrauch, Duschdauer und Energiepreis zu jährlichen Kosten umrechnen.', 'Wie viel kostet eine Dusche? Berechne Wasser- und Energiekosten anhand deiner Duschdauer und deines Verbrauchs.'),
+            'raucher-kosten-rechner.html': ('Was kostet Rauchen? Zigarettenkosten berechnen', 'Zigarettenkosten berechnen: tägliche Ausgaben auf Monats-, Jahres- und Mehrjahreskosten hochrechnen.', 'Berechne die direkten Ausgaben für Zigaretten anhand deines täglichen Konsums und Packungspreises.')
+          }
+
+          for filename, (title, description, intro) in pages.items():
+              p = Path(filename)
+              if not p.exists():
+                  continue
+              s = p.read_text(encoding='utf-8')
+              s = re.sub(r'<title>.*?</title>', f'<title>{html.escape(title)}</title>', s, count=1, flags=re.S)
+              s = re.sub(r'<meta name="description" content=".*?">', f'<meta name="description" content="{html.escape(description)}">', s, count=1, flags=re.S)
+              canonical = f'{base}/{filename}'
+              s = re.sub(r'<link rel="canonical" href=".*?">', f'<link rel="canonical" href="{canonical}">', s, count=1)
+              if 'property="og:title"' not in s:
+                  tags = f'''<meta property="og:title" content="{html.escape(title)}"><meta property="og:description" content="{html.escape(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{canonical}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="{html.escape(title)}"><meta name="twitter:description" content="{html.escape(description)}">'''
+                  s = s.replace('</head>', tags + '</head>', 1)
+              if 'id="seo-schema"' not in s:
+                  schema = f'''<script id="seo-schema" type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":{__import__('json').dumps(title, ensure_ascii=False)},"description":{__import__('json').dumps(description, ensure_ascii=False)},"url":{__import__('json').dumps(canonical)},"inLanguage":"de-CH","isPartOf":{{"@type":"WebSite","name":"Entscheidungsrechner","url":{__import__('json').dumps(base + '/')}}}}}</script>'''
+                  s = s.replace('</head>', schema + '</head>', 1)
+              marker = '<section class="seo-intro">'
+              if marker not in s:
+                  block = f'''<section class="seo-intro" aria-label="Informationen zum Rechner"><h2>{html.escape(title.replace(' – Entscheidungsrechner','').replace(' Rechner Schweiz',''))}</h2><p>{html.escape(intro)}</p><p>Der Rechner ist als unverbindliche Orientierung gedacht. Die Ergebnisse hängen von deinen Eingaben und den verwendeten Annahmen ab. Prüfe relevante Preise, Tarife und Vertragsbedingungen vor wichtigen Entscheidungen selbst.</p></section>'''
+                  css = '<style id="seo-intro-style">.seo-intro{margin:28px 0 18px;padding:20px 22px;background:#f8fafc;border:1px solid #e1e7ee;border-radius:15px;color:#667085;line-height:1.6}.seo-intro h2{margin:0 0 8px;color:#172033;font-size:20px}.seo-intro p{margin:6px 0}</style>'
+                  s = s.replace('</head>', css + '</head>', 1)
+                  pos = s.find('</div><div class="pastel-ai">')
+                  if pos != -1:
+                      s = s[:pos] + block + s[pos:]
+                  else:
+                      s = s.replace('</div><div class="disclaimer">', block + '</div><div class="disclaimer">', 1)
+              p.write_text(s, encoding='utf-8')
+
+          # Keep only index + calculator pages in the XML sitemap.
+          urls = [base + '/'] + [base + '/' + f for f in pages]
+          sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{u}</loc></url>\n' for u in urls) + '</urlset>\n'
+          Path('sitemap.xml').write_text(sitemap, encoding='utf-8')
+          PY
+      - name: Commit SEO changes and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/seo-optimize.yml
+          git add '*.html' sitemap.xml
+          git commit -m 'Improve SEO metadata and calculator content'
+          git push
