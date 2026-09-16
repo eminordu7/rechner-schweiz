@@ -1,310 +1,429 @@
-
 <!DOCTYPE html>
 <html lang="de-CH">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>RechnerSchweiz – Was ist für mich günstiger?</title>
+  <meta name="description" content="Schweizer Entscheidungsrechner für Kostenvergleiche im Alltag. Finde heraus, was für dich günstiger ist – neutral, einfach und kostenlos.">
 
-<title>RechnerSchweiz – Kostenlose Rechner für die Schweiz</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<meta name="description" content="Kostenlose Schweizer Online-Rechner: Lohnrechner, Prozentrechner und weitere Rechner für Alltag, Finanzen und Arbeit. Einfach und schnell online berechnen.">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f8fa;
+      color: #17202a;
+      line-height: 1.5;
+    }
 
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://eminordu7.github.io/rechner-schweiz/">
-```
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
+    .container {
+      width: 92%;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-<style>
-*{box-sizing:border-box}
+    /* HEADER */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f6f8;
-color:#17202a;
-}
+    .nav {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-.header{
-background:#111827;
-color:white;
-padding:22px 20px;
-}
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-.header-inner{
-max-width:1100px;
-margin:auto;
-}
+    .logo span {
+      color: #2563eb;
+    }
 
-.logo{
-font-size:21px;
-font-weight:800;
-}
+    .nav-link {
+      font-size: 14px;
+      color: #5b6470;
+    }
 
-.logo span{
-color:#ff3b30;
-}
+    /* HERO */
+    .hero {
+      background: #ffffff;
+      padding: 75px 20px 70px;
+      text-align: center;
+    }
 
-.container{
-max-width:1100px;
-margin:0 auto;
-padding:55px 20px;
-}
+    .hero-badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 13px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
 
-.hero{
-text-align:center;
-margin-bottom:45px;
-}
+    .hero h1 {
+      font-size: 46px;
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      max-width: 760px;
+      margin: 0 auto 20px;
+    }
 
-.hero h1{
-font-size:44px;
-margin:0 0 15px;
-}
+    .hero h1 span {
+      color: #2563eb;
+    }
 
-.hero h1 span{
-color:#ff3b30;
-}
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #626b76;
+      font-size: 18px;
+    }
 
-.hero p{
-font-size:18px;
-color:#667085;
-line-height:1.6;
-max-width:700px;
-margin:auto;
-}
+    /* DECISION SECTION */
+    .decisions {
+      padding: 55px 0 80px;
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:22px;
-}
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
 
-.card{
-background:white;
-border-radius:18px;
-padding:27px;
-box-shadow:0 5px 25px rgba(0,0,0,.06);
-transition:.2s;
-}
+    .section-title h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
 
-.card:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 30px rgba(0,0,0,.10);
-}
+    .section-title p {
+      color: #6b7280;
+    }
 
-.icon{
-font-size:32px;
-margin-bottom:18px;
-}
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
 
-.card h2{
-font-size:21px;
-margin:0 0 9px;
-}
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 27px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
 
-.card p{
-color:#667085;
-line-height:1.5;
-font-size:14px;
-min-height:63px;
-}
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    }
 
-.button{
-display:inline-block;
-background:#ff3b30;
-color:white;
-text-decoration:none;
-padding:12px 18px;
-border-radius:10px;
-font-weight:800;
-font-size:14px;
-}
+    .card-icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eff6ff;
+      border-radius: 10px;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
 
-.coming{
-background:#f2f4f7;
-color:#667085;
-cursor:default;
-}
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 9px;
+    }
 
-.section-title{
-font-size:14px;
-font-weight:800;
-text-transform:uppercase;
-letter-spacing:.6px;
-color:#667085;
-margin:0 0 18px;
-}
+    .card p {
+      font-size: 14px;
+      color: #68717d;
+      margin-bottom: 20px;
+    }
 
-footer{
-text-align:center;
-color:#98a2b3;
-font-size:13px;
-padding:30px 20px 45px;
-}
+    .card-button {
+      display: inline-block;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
 
-@media(max-width:850px){
-.grid{
-grid-template-columns:repeat(2,1fr);
-}
-}
+    .card-button:hover {
+      background: #1d4ed8;
+    }
 
-@media(max-width:600px){
-.container{
-padding-top:40px;
-}
+    .coming {
+      opacity: 0.72;
+    }
 
-.hero h1{
-font-size:34px;
-}
+    .coming .card-button {
+      background: #eef0f3;
+      color: #6b7280;
+    }
 
-.grid{
-grid-template-columns:1fr;
-}
-}
-</style>
+    /* INFO */
+    .info {
+      background: #ffffff;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 55px 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 35px;
+      text-align: center;
+    }
+
+    .info-item strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .info-item span {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 30px 0;
+      text-align: center;
+      color: #8a929c;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 800px) {
+      .hero {
+        padding: 55px 15px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .nav {
+        height: 60px;
+      }
+
+      .nav-link {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="header">
-<div class="header-inner">
-<div class="logo">Rechner<span>Schweiz</span></div>
-</div>
+<header>
+  <div class="container nav">
+    <div class="logo">Rechner<span>Schweiz</span></div>
+    <div class="nav-link">Schweizer Kosten- & Entscheidungsrechner</div>
+  </div>
 </header>
 
-<main class="container">
 
 <section class="hero">
-<h1>Rechner<span>Schweiz</span></h1>
+  <div class="hero-badge">🇨🇭 Für die Schweiz</div>
 
-<p>
-Kostenlose Rechner für die Schweiz – einfach, schnell und verständlich.
-Wähle einen Rechner und berechne dein Ergebnis direkt online.
-</p>
+  <h1>
+    Was ist für mich <span>wirklich günstiger?</span>
+  </h1>
+
+  <p>
+    Vergleiche konkrete Entscheidungen und finde heraus,
+    was dich langfristig weniger kostet.
+  </p>
 </section>
 
-<div class="section-title">
-Unsere Rechner
-</div>
 
-<section class="grid">
+<section class="decisions">
+  <div class="container">
 
-<div class="card">
-<div class="icon">💰</div>
-<h2>Lohnrechner Schweiz</h2>
-<p>
-Bruttolohn in Nettolohn umrechnen – inklusive Sozialabzüge,
-Pensionskasse, Familienzulagen und Spesen.
-</p>
-<a class="button" href="lohnrechner.html">
-Lohn berechnen →
-</a>
-</div>
+    <div class="section-title">
+      <h2>Welche Entscheidung steht an?</h2>
+      <p>Wähle einen Vergleich und rechne deine persönliche Situation durch.</p>
+    </div>
 
-<div class="card">
-<div class="icon">🔢</div>
-<h2>Prozentrechner</h2>
-<p>
-Berechne Prozentwerte, Rabatte, Erhöhungen und
-Veränderungen schnell und einfach.
-</p>
-<a class="button" href="prozentrechner.html">
-Prozent berechnen →
-</a>
-</div>
+    <div class="cards">
 
-<div class="card">
-<div class="icon">🧾</div>
-<h2>MWST-Rechner Schweiz</h2>
-<p>
-Berechne Mehrwertsteuer, Nettobetrag und Bruttobetrag
-mit den Schweizer MWST-Sätzen.
-</p>
-<a class="button" href="mwst-rechner.html">
-MWST berechnen →
-</a>
-</div>
+      <!-- LEASING -->
+      <div class="card">
+        <div class="card-icon">🚗</div>
 
-<div class="card">
-<div class="icon">🚗</div>
-<h2>Autokostenrechner</h2>
-<p>
-Berechne die monatlichen und jährlichen Kosten
-deines Autos inklusive Treibstoff und Wertverlust.
-</p>
-<a class="button" href="autokostenrechner.html">
-Autokosten berechnen →
-</a>
-</div>
-  
-<div class="card">
-<div class="icon">🏠</div>
-<h2>Hypothekenrechner</h2>
-<p>
-Berechne Hypothekarzinsen, monatliche Belastung und
-Tragbarkeit beim Immobilienkauf.
-</p>
-<span class="button coming">
-Demnächst
-</span>
-</div>
+        <h3>Leasing oder Kaufen?</h3>
 
-<div class="card">
-<div class="icon">🧾</div>
-<h2>Steuerrechner Schweiz</h2>
-<p>
-Schätze deine Steuerbelastung anhand von Einkommen,
-Kanton und persönlicher Situation.
-</p>
-<span class="button coming">
-Demnächst
-</span>
-</div>
+        <p>
+          Vergleiche die tatsächlichen Gesamtkosten von Leasing
+          und Autokauf über mehrere Jahre.
+        </p>
 
-<div class="card">
-<div class="icon">🚗</div>
-<h2>Autokostenrechner</h2>
-<p>
-Berechne die tatsächlichen monatlichen Kosten deines
-Autos inklusive Versicherung, Treibstoff und Unterhalt.
-</p>
-<span class="button coming">
-Demnächst
-</span>
-</div>
+        <a href="leasing-vs-kauf.html" class="card-button">
+          Vergleich starten →
+        </a>
+      </div>
 
-<div class="card">
-<div class="icon">💳</div>
-<h2>Kreditrechner</h2>
-<p>
-Berechne Monatsrate, Zinsen und Gesamtkosten eines
-Kredits in der Schweiz.
-</p>
-<span class="button coming">
-Demnächst
-</span>
-</div>
 
-<div class="card">
-<div class="icon">☀️</div>
-<h2>Solarrechner</h2>
-<p>
-Berechne Solarstrom, Eigenverbrauch, Einsparung und
-mögliche Amortisationsdauer.
-</p>
-<span class="button coming">
-Demnächst
-</span>
-</div>
+      <!-- ELEKTRO -->
+      <div class="card">
+        <div class="card-icon">⚡</div>
 
+        <h3>Elektro oder Benzin?</h3>
+
+        <p>
+          Was kostet dein Auto tatsächlich pro Jahr –
+          inklusive Energie, Wartung, Versicherung und Wertverlust?
+        </p>
+
+        <a href="elektro-vs-benzin.html" class="card-button">
+          Vergleich starten →
+        </a>
+      </div>
+
+
+      <!-- SOLAR -->
+      <div class="card">
+        <div class="card-icon">☀️</div>
+
+        <h3>Solar oder Netzstrom?</h3>
+
+        <p>
+          Berechne, wann sich eine Solaranlage gegenüber
+          dem normalen Strombezug rechnet.
+        </p>
+
+        <a href="solar-vs-netzstrom.html" class="card-button">
+          Vergleich starten →
+        </a>
+      </div>
+
+
+      <!-- BATTERIE -->
+      <div class="card coming">
+        <div class="card-icon">🔋</div>
+
+        <h3>Batterie oder keine Batterie?</h3>
+
+        <p>
+          Lohnt sich ein Batteriespeicher für deine PV-Anlage
+          oder ist der zusätzliche Speicher nicht wirtschaftlich?
+        </p>
+
+        <span class="card-button">
+          Bald verfügbar
+        </span>
+      </div>
+
+
+      <!-- HEIZUNG -->
+      <div class="card coming">
+        <div class="card-icon">🏠</div>
+
+        <h3>Wärmepumpe oder alte Heizung?</h3>
+
+        <p>
+          Vergleiche Investition, Energiekosten und laufende Kosten
+          verschiedener Heizsysteme.
+        </p>
+
+        <span class="card-button">
+          Bald verfügbar
+        </span>
+      </div>
+
+
+      <!-- ÖV -->
+      <div class="card coming">
+        <div class="card-icon">🚆</div>
+
+        <h3>ÖV oder Auto?</h3>
+
+        <p>
+          Was kostet dein täglicher Arbeitsweg wirklich –
+          Auto und öffentliche Verkehrsmittel im direkten Vergleich.
+        </p>
+
+        <span class="card-button">
+          Bald verfügbar
+        </span>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-</main>
+
+<section class="info">
+  <div class="container">
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <strong>🇨🇭 Für die Schweiz</strong>
+        <span>Mit Schweizer Preisen, Kosten und Rahmenbedingungen.</span>
+      </div>
+
+      <div class="info-item">
+        <strong>💰 Konkrete Zahlen</strong>
+        <span>Keine allgemeinen Tipps – berechne deine eigene Situation.</span>
+      </div>
+
+      <div class="info-item">
+        <strong>🔍 Transparent</strong>
+        <span>Zeige, welche Kosten in den Vergleich einfliessen.</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 
 <footer>
-© 2026 RechnerSchweiz · Kostenlose Schweizer Online-Rechner
+  © 2026 RechnerSchweiz · Kosten vergleichen. Entscheidungen verstehen.
 </footer>
 
 </body>
 </html>
-```
