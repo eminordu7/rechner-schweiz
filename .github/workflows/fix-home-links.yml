@@ -21,7 +21,7 @@ jobs:
           old = 'https://entscheidungsrechner.ch'
           new = 'https://eminordu7.github.io/rechner-schweiz'
           for p in Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts:
+              if not p.is_file() or '.git' in p.parts or '.github' in p.parts:
                   continue
               try:
                   s = p.read_text(encoding='utf-8')
