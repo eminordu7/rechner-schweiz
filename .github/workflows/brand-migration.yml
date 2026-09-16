@@ -1,0 +1,85 @@
+name: Migrate site branding
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'logo-mark.svg'
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update branding and navigation
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          DOMAIN = 'https://entscheidungsrechner.ch'
+          old_base = 'https://eminordu7.github.io/rechner-schweiz'
+
+          brand_style = '''<style id="entscheidungsrechner-brand">
+          .logo{display:flex!important;align-items:center!important;gap:10px!important;white-space:nowrap!important;color:#172033!important;text-decoration:none!important}
+          .logo .brand-mark{width:38px;height:38px;display:block;flex:0 0 38px}
+          .logo .brand-name{font-size:22px;font-weight:800;letter-spacing:-.35px}
+          @media(max-width:600px){.logo .brand-mark{width:34px;height:34px;flex-basis:34px}.logo .brand-name{font-size:19px}}
+          </style>'''
+
+          logo_markup = '<a href="index.html" class="logo" aria-label="Entscheidungsrechner – Startseite"><img class="brand-mark" src="logo-mark.svg" alt=""><span class="brand-name">Entscheidungsrechner</span></a>'
+
+          for path in Path('.').glob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              text = text.replace(old_base, DOMAIN)
+              text = text.replace('RechnerSchweiz', 'Entscheidungsrechner')
+              text = re.sub(r'<a href="index\.html" class="logo">.*?</a>', logo_markup, text, count=1, flags=re.S)
+              text = re.sub(r'<style id="entscheidungsrechner-brand">.*?</style>', '', text, count=1, flags=re.S)
+              if '</head>' in text:
+                  text = text.replace('</head>', brand_style + '</head>', 1)
+
+              if path.name == 'index.html':
+                  text = text.replace('Was ist für mich wirklich günstiger?</h1><p>Schweizer Entscheidungsrechner für konkrete Alltagsfragen', 'Was ist für mich wirklich günstiger?</h1><p>Entscheidungsrechner für die Schweiz: konkrete Alltagsfragen, Kostenvergleiche und Investitionsentscheidungen')
+                  text = text.replace('Schweizer Entscheidungsrechner für Mobilität, Wohnen, Energie, Alltag und Kosten.', 'Entscheidungsrechner für die Schweiz: Mobilität, Wohnen, Energie, Alltag und Kosten vergleichen.')
+                  text = text.replace('Schweizer Entscheidungsrechner – RechnerSchweiz', 'Schweizer Entscheidungsrechner – Entscheidungsrechner')
+
+              path.write_text(text, encoding='utf-8')
+
+          # Pages without the normal header get a compact branded header as well.
+          for filename in ('404.html', 'danke.html'):
+              path = Path(filename)
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if 'class="logo"' not in text and '<body>' in text:
+                  header = '<header style="position:absolute;top:0;left:0;right:0;padding:18px 20px;background:rgba(255,255,255,.94);border-bottom:1px solid #e5e7eb"><div style="max-width:900px;margin:auto">' + logo_markup + '</div></header>'
+                  text = text.replace('<body>', '<body>' + header, 1)
+              path.write_text(text, encoding='utf-8')
+
+          sitemap = Path('sitemap.xml')
+          if sitemap.exists():
+              text = sitemap.read_text(encoding='utf-8').replace(old_base, DOMAIN)
+              sitemap.write_text(text, encoding='utf-8')
+
+          robots = Path('robots.txt')
+          if robots.exists():
+              text = robots.read_text(encoding='utf-8').replace(old_base, DOMAIN)
+              robots.write_text(text, encoding='utf-8')
+
+      - name: Commit migration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html' sitemap.xml robots.txt
+          git diff --cached --quiet || git commit -m 'Rebrand site to Entscheidungsrechner'
+          git push
+
+      - name: Remove one-time migration workflow
+        if: success()
+        run: |
+          git rm .github/workflows/brand-migration.yml
+          git commit -m 'Remove one-time branding migration workflow'
+          git push
