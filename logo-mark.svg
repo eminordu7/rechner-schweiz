@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Entscheidungsrechner Logo</title>
+  <desc id="desc">Abstraktes Diagramm mit Haken für klare Entscheidungen</desc>
+  <rect width="64" height="64" rx="16" fill="#f5f9fd"/>
+  <path d="M15 44V30h8v14h-8Zm13 0V22h8v22h-8Zm13 0V14h8v30h-8Z" fill="#536f8f"/>
+  <path d="M13 39c7-7 12-4 17-9 4-4 7-10 13-12" fill="none" stroke="#8aa2bd" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="m30 37 6 6 15-18" fill="none" stroke="#d94f57" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
