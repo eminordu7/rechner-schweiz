@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="de-CH">
 <head>
@@ -6,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Leasing oder Kaufen? – Schweizer Autokostenvergleich</title>
-  <meta name="description" content="Vergleiche die tatsächlichen Kosten von Leasing und Autokauf in der Schweiz. Berechne deine monatlichen und gesamten Kosten einfach und transparent.">
+  <meta name="description" content="Vergleiche Leasing und Autokauf in der Schweiz. Berechne deine tatsächlichen Kosten über mehrere Jahre inklusive Wertverlust, Finanzierung, Leasingrate und Restwert.">
 
   <style>
     * {
@@ -43,6 +42,8 @@
     .logo {
       font-size: 21px;
       font-weight: 800;
+      text-decoration: none;
+      color: #17202a;
     }
 
     .logo span {
@@ -52,6 +53,7 @@
     .back {
       color: #5f6874;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .hero {
@@ -79,7 +81,7 @@
 
     .hero p {
       color: #68717d;
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
       font-size: 17px;
     }
@@ -131,6 +133,11 @@
       margin-top: 5px;
     }
 
+    .calculated {
+      background: #f3f6fa !important;
+      font-weight: 700;
+    }
+
     .button {
       width: 100%;
       border: 0;
@@ -147,7 +154,6 @@
       background: #1d4ed8;
     }
 
-    /* RESULT */
     #result {
       display: none;
     }
@@ -207,6 +213,13 @@
       justify-content: space-between;
       font-size: 17px;
       font-weight: 700;
+    }
+
+    .monthly {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
     }
 
     .winner {
@@ -270,60 +283,102 @@
 
 
 <section class="hero">
+
   <div class="badge">🇨🇭 Schweizer Autokostenvergleich</div>
 
   <h1>Leasing oder Kaufen?</h1>
 
   <p>
-    Was kostet dein Auto über mehrere Jahre tatsächlich?
-    Vergleiche Leasing und Kauf anhand deiner eigenen Zahlen.
+    Was kostet dich dein Auto tatsächlich?
+    Vergleiche Kauf und Leasing anhand deiner persönlichen Zahlen.
   </p>
+
 </section>
 
 
 <section class="calculator">
+
   <div class="container">
+
+
+    <!-- FAHRZEUG -->
 
     <div class="box">
 
-      <h2>1. Fahrzeug & Zeitraum</h2>
+      <h2>1. Fahrzeug</h2>
 
       <div class="grid">
 
         <div class="field">
-          <label for="price">Kaufpreis des Autos</label>
-          <input type="number" id="price" value="50000" min="0">
+          <label for="price">Kaufpreis / Listenpreis</label>
+
+          <input
+            type="number"
+            id="price"
+            value="50000"
+            min="0"
+            oninput="updateLeasingRate()"
+          >
+
           <small>CHF</small>
         </div>
 
+
         <div class="field">
+
           <label for="years">Vergleichszeitraum</label>
+
           <select id="years">
+
             <option value="3">3 Jahre</option>
             <option value="4">4 Jahre</option>
             <option value="5" selected>5 Jahre</option>
             <option value="6">6 Jahre</option>
             <option value="7">7 Jahre</option>
             <option value="8">8 Jahre</option>
+
           </select>
+
         </div>
 
+
         <div class="field">
+
           <label for="km">Kilometer pro Jahr</label>
-          <input type="number" id="km" value="15000" min="0">
-          <small>km pro Jahr</small>
+
+          <input
+            type="number"
+            id="km"
+            value="15000"
+            min="0"
+          >
+
+          <small>Nur zur Information – beeinflusst den Vergleich aktuell nicht.</small>
+
         </div>
 
+
         <div class="field">
+
           <label for="restwert">Restwert nach Zeitraum</label>
-          <input type="number" id="restwert" value="25000" min="0">
-          <small>CHF – erwarteter Verkaufswert</small>
+
+          <input
+            type="number"
+            id="restwert"
+            value="25000"
+            min="0"
+          >
+
+          <small>Geschätzter Fahrzeugwert nach dem Vergleichszeitraum.</small>
+
         </div>
 
       </div>
 
     </div>
 
+
+    <!-- KAUF -->
 
     <div class="box">
 
@@ -332,33 +387,75 @@
       <div class="grid">
 
         <div class="field">
-          <label for="cash">Eigenkapital / Anzahlung</label>
-          <input type="number" id="cash" value="10000" min="0">
+
+          <label for="cash">Anzahlung / Eigenkapital</label>
+
+          <input
+            type="number"
+            id="cash"
+            value="10000"
+            min="0"
+          >
+
           <small>CHF</small>
+
         </div>
 
+
         <div class="field">
+
           <label for="interest">Kreditzins</label>
-          <input type="number" id="interest" value="5" min="0" step="0.1">
+
+          <input
+            type="number"
+            id="interest"
+            value="5"
+            min="0"
+            step="0.1"
+          >
+
           <small>% pro Jahr</small>
+
         </div>
 
+
         <div class="field">
+
           <label for="maintenanceBuy">Wartung & Reparaturen</label>
-          <input type="number" id="maintenanceBuy" value="1500" min="0">
+
+          <input
+            type="number"
+            id="maintenanceBuy"
+            value="1000"
+            min="0"
+          >
+
           <small>CHF pro Jahr</small>
+
         </div>
 
+
         <div class="field">
+
           <label for="insuranceBuy">Versicherung</label>
-          <input type="number" id="insuranceBuy" value="1800" min="0">
+
+          <input
+            type="number"
+            id="insuranceBuy"
+            value="1800"
+            min="0"
+          >
+
           <small>CHF pro Jahr</small>
+
         </div>
 
       </div>
 
     </div>
 
+
+    <!-- LEASING -->
 
     <div class="box">
 
@@ -366,46 +463,167 @@
 
       <div class="grid">
 
+
         <div class="field">
-          <label for="downPayment">Leasing-Anzahlung</label>
-          <input type="number" id="downPayment" value="5000" min="0">
+
+          <label for="leasingPercent">
+            Leasingrate in %
+          </label>
+
+          <input
+            type="number"
+            id="leasingPercent"
+            value="1.2"
+            min="0"
+            step="0.01"
+            oninput="updateLeasingRate()"
+          >
+
+          <small>
+            Beispiel: 1.2 % vom Fahrzeugpreis pro Monat
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="leasingRate">
+            Monatliche Leasingrate
+          </label>
+
+          <input
+            type="text"
+            id="leasingRate"
+            class="calculated"
+            value="CHF 600"
+            readonly
+          >
+
+          <small>
+            Wird automatisch aus Fahrzeugpreis × Leasingrate berechnet.
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="downPayment">
+            Leasing-Anzahlung
+          </label>
+
+          <input
+            type="number"
+            id="downPayment"
+            value="5000"
+            min="0"
+          >
+
           <small>CHF</small>
+
         </div>
 
-        <div class="field">
-          <label for="leasingRate">Leasingrate</label>
-          <input type="number" id="leasingRate" value="650" min="0">
-          <small>CHF pro Monat</small>
-        </div>
 
         <div class="field">
-          <label for="leasingFee">Leasing-Gebühren</label>
-          <input type="number" id="leasingFee" value="1000" min="0">
-          <small>CHF insgesamt</small>
+
+          <label for="leasingFee">
+            Leasing-Gebühren
+          </label>
+
+          <input
+            type="number"
+            id="leasingFee"
+            value="1000"
+            min="0"
+          >
+
+          <small>CHF über die gesamte Laufzeit</small>
+
         </div>
 
+
         <div class="field">
-          <label for="maintenanceLease">Wartung & Reparaturen</label>
-          <input type="number" id="maintenanceLease" value="1200" min="0">
+
+          <label for="maintenanceLease">
+            Wartung & Reparaturen
+          </label>
+
+          <input
+            type="number"
+            id="maintenanceLease"
+            value="1200"
+            min="0"
+          >
+
           <small>CHF pro Jahr</small>
+
         </div>
 
+
         <div class="field">
-          <label for="insuranceLease">Versicherung</label>
-          <input type="number" id="insuranceLease" value="1800" min="0">
+
+          <label for="insuranceLease">
+            Versicherung
+          </label>
+
+          <input
+            type="number"
+            id="insuranceLease"
+            value="1800"
+            min="0"
+          >
+
           <small>CHF pro Jahr</small>
+
         </div>
 
+
         <div class="field">
-          <label for="buyout">Kaufpreis am Leasingende</label>
-          <input type="number" id="buyout" value="0" min="0">
-          <small>CHF – falls das Fahrzeug übernommen wird</small>
+
+          <label for="buyout">
+            Kaufpreis am Leasingende
+          </label>
+
+          <input
+            type="number"
+            id="buyout"
+            value="13000"
+            min="0"
+          >
+
+          <small>
+            Nur ausfüllen, wenn du das Auto am Ende übernehmen möchtest.
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="leaseEndValue">
+            Fahrzeugwert am Leasingende
+          </label>
+
+          <input
+            type="number"
+            id="leaseEndValue"
+            value="25000"
+            min="0"
+          >
+
+          <small>
+            Geschätzter Marktwert nach Ablauf der Leasingdauer.
+          </small>
+
         </div>
 
       </div>
 
     </div>
 
+
+    <!-- BUTTON -->
 
     <div class="box">
 
@@ -416,25 +634,37 @@
     </div>
 
 
+    <!-- RESULTAT -->
+
     <div class="box" id="result">
 
       <div class="result-head">
+
         <h2>Dein Ergebnis</h2>
-        <p>Gesamtkosten über den gewählten Zeitraum</p>
+
+        <p>
+          Vergleich über <span id="resultYears">5</span> Jahre
+        </p>
+
       </div>
+
 
       <div class="comparison">
 
+
+        <!-- KAUF -->
+
         <div class="result-card">
+
           <h3>🚗 Kauf</h3>
 
           <div class="result-row">
-            <span>Wertverlust</span>
-            <strong id="buyDepreciation">CHF 0</strong>
+            <span>Kaufpreis</span>
+            <strong id="buyPrice">CHF 0</strong>
           </div>
 
           <div class="result-row">
-            <span>Zinskosten</span>
+            <span>Finanzierungskosten</span>
             <strong id="buyInterest">CHF 0</strong>
           </div>
 
@@ -448,24 +678,32 @@
             <strong id="buyInsurance">CHF 0</strong>
           </div>
 
+          <div class="result-row">
+            <span>abzüglich Restwert</span>
+            <strong id="buyRestwert">− CHF 0</strong>
+          </div>
+
           <div class="total">
-            <span>Gesamtkosten</span>
+            <span>Effektive Kosten</span>
             <span id="buyTotal">CHF 0</span>
           </div>
 
-          <div class="result-row">
-            <span>Pro Monat</span>
+          <div class="monthly">
+            <span>Effektiv pro Monat</span>
             <strong id="buyMonthly">CHF 0</strong>
           </div>
 
         </div>
 
 
+        <!-- LEASING -->
+
         <div class="result-card">
+
           <h3>🔑 Leasing</h3>
 
           <div class="result-row">
-            <span>Anzahlung</span>
+            <span>Leasing-Anzahlung</span>
             <strong id="leaseDown">CHF 0</strong>
           </div>
 
@@ -490,17 +728,22 @@
           </div>
 
           <div class="result-row">
-            <span>Kauf am Ende</span>
+            <span>Kaufpreis am Ende</span>
             <strong id="leaseBuyout">CHF 0</strong>
           </div>
 
+          <div class="result-row">
+            <span>abzüglich Fahrzeugwert</span>
+            <strong id="leaseEndValue">− CHF 0</strong>
+          </div>
+
           <div class="total">
-            <span>Gesamtkosten</span>
+            <span>Effektive Kosten</span>
             <span id="leaseTotal">CHF 0</span>
           </div>
 
-          <div class="result-row">
-            <span>Pro Monat</span>
+          <div class="monthly">
+            <span>Effektiv pro Monat</span>
             <strong id="leaseMonthly">CHF 0</strong>
           </div>
 
@@ -511,76 +754,125 @@
 
       <div class="winner" id="winner"></div>
 
+
       <div class="explanation">
-        Der Vergleich berücksichtigt Wertverlust, Finanzierung,
-        Leasingkosten, Wartung und Versicherung. Treibstoff bzw.
-        Strom sowie Steuern und weitere laufende Fahrzeugkosten
-        sind bewusst nicht enthalten, da diese bei beiden Varianten
-        grundsätzlich vergleichbar sein können.
+
+        <strong>So wird gerechnet:</strong><br><br>
+
+        Beim Kauf wird der gesamte Fahrzeugpreis berücksichtigt.
+        Der Restwert am Ende wird wieder abgezogen, weil du das
+        Fahrzeug dann noch besitzt. Finanzierungskosten, Wartung
+        und Versicherung werden zusätzlich berücksichtigt.
+
+        <br><br>
+
+        Beim Leasing werden Anzahlung, sämtliche Leasingraten,
+        Gebühren, Wartung und Versicherung berücksichtigt.
+        Wenn du das Fahrzeug am Ende kaufst, wird zusätzlich der
+        vereinbarte Kaufpreis berücksichtigt. Der verbleibende
+        Fahrzeugwert wird anschließend abgezogen.
+
       </div>
 
+
       <div class="note">
-        <strong>Hinweis:</strong> Das Ergebnis ist eine Modellrechnung.
-        Tatsächliche Leasingkosten, Finanzierungskosten und der
-        zukünftige Fahrzeugwert können abweichen.
+
+        <strong>Wichtig:</strong>
+        Die tatsächliche Leasingrate hängt in der Praxis unter anderem
+        von Fahrzeugpreis, Laufzeit, Anzahlung, Kilometerleistung,
+        Restwert und Zinssatz ab. Die Prozentangabe auf dieser Seite
+        dient als vereinfachte Berechnung der monatlichen Rate.
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
 
 <script>
 
 function money(value) {
+
   return new Intl.NumberFormat('de-CH', {
     style: 'currency',
     currency: 'CHF',
     maximumFractionDigits: 0
   }).format(value);
+
 }
 
 
+/* Leasingrate automatisch berechnen */
+
+function updateLeasingRate() {
+
+  const price =
+    Number(document.getElementById('price').value) || 0;
+
+  const percent =
+    Number(document.getElementById('leasingPercent').value) || 0;
+
+  const rate =
+    price * (percent / 100);
+
+  document.getElementById('leasingRate').value =
+    money(rate);
+}
+
+
+/* Hauptberechnung */
+
 function calculate() {
 
-  const price = Number(document.getElementById('price').value) || 0;
-  const years = Number(document.getElementById('years').value) || 1;
-  const restwert = Number(document.getElementById('restwert').value) || 0;
+  const price =
+    Number(document.getElementById('price').value) || 0;
 
-  const cash = Number(document.getElementById('cash').value) || 0;
-  const interest = Number(document.getElementById('interest').value) || 0;
-  const maintenanceBuy = Number(document.getElementById('maintenanceBuy').value) || 0;
-  const insuranceBuy = Number(document.getElementById('insuranceBuy').value) || 0;
+  const years =
+    Number(document.getElementById('years').value) || 1;
 
-  const downPayment = Number(document.getElementById('downPayment').value) || 0;
-  const leasingRate = Number(document.getElementById('leasingRate').value) || 0;
-  const leasingFee = Number(document.getElementById('leasingFee').value) || 0;
-  const maintenanceLease = Number(document.getElementById('maintenanceLease').value) || 0;
-  const insuranceLease = Number(document.getElementById('insuranceLease').value) || 0;
-  const buyout = Number(document.getElementById('buyout').value) || 0;
+  const restwert =
+    Number(document.getElementById('restwert').value) || 0;
+
+
+  /* KAUF */
+
+  const cash =
+    Number(document.getElementById('cash').value) || 0;
+
+  const interest =
+    Number(document.getElementById('interest').value) || 0;
+
+  const maintenanceBuy =
+    Number(document.getElementById('maintenanceBuy').value) || 0;
+
+  const insuranceBuy =
+    Number(document.getElementById('insuranceBuy').value) || 0;
 
 
   /*
-    KAUF
-    Vereinfachte Berechnung:
-    Wertverlust = Kaufpreis - Restwert
+    Der Kaufpreis wird IMMER berücksichtigt.
 
-    Finanzierung:
-    Nur der finanzierte Teil wird verzinst.
-    Als Näherung wird der durchschnittliche offene Betrag
-    über die Laufzeit verwendet.
+    Bei Finanzierung:
+    Der finanzierte Betrag ist Kaufpreis minus Anzahlung.
+
+    Vereinfachte Zinsberechnung:
+    durchschnittlich etwa die Hälfte der Finanzierung
+    bleibt über die Laufzeit offen.
   */
 
-  const financed = Math.max(price - cash, 0);
+  const financedAmount =
+    Math.max(price - cash, 0);
 
-  const averageDebt = financed / 2;
+  const averageDebt =
+    financedAmount / 2;
 
   const buyInterest =
-    averageDebt * (interest / 100) * years;
-
-  const buyDepreciation =
-    Math.max(price - restwert, 0);
+    averageDebt *
+    (interest / 100) *
+    years;
 
   const buyMaintenance =
     maintenanceBuy * years;
@@ -588,16 +880,50 @@ function calculate() {
   const buyInsurance =
     insuranceBuy * years;
 
-  const buyTotal =
-    buyDepreciation +
-    buyInterest +
-    buyMaintenance +
-    buyInsurance;
-
 
   /*
-    LEASING
+    Effektive Kaufkosten:
+    Kaufpreis
+    + Zinsen
+    + Wartung
+    + Versicherung
+    - Restwert
   */
+
+  const buyTotal =
+    price +
+    buyInterest +
+    buyMaintenance +
+    buyInsurance -
+    restwert;
+
+
+  /* LEASING */
+
+  const leasingPercent =
+    Number(document.getElementById('leasingPercent').value) || 0;
+
+  const leasingRate =
+    price * (leasingPercent / 100);
+
+  const downPayment =
+    Number(document.getElementById('downPayment').value) || 0;
+
+  const leasingFee =
+    Number(document.getElementById('leasingFee').value) || 0;
+
+  const maintenanceLease =
+    Number(document.getElementById('maintenanceLease').value) || 0;
+
+  const insuranceLease =
+    Number(document.getElementById('insuranceLease').value) || 0;
+
+  const buyout =
+    Number(document.getElementById('buyout').value) || 0;
+
+  const leaseEndValue =
+    Number(document.getElementById('leaseEndValue').value) || 0;
+
 
   const leaseRates =
     leasingRate * 12 * years;
@@ -608,13 +934,26 @@ function calculate() {
   const leaseInsurance =
     insuranceLease * years;
 
+
+  /*
+    Effektive Leasingkosten:
+    Anzahlung
+    + Raten
+    + Gebühren
+    + Kaufpreis am Ende
+    + Wartung
+    + Versicherung
+    - Fahrzeugwert am Ende
+  */
+
   const leaseTotal =
     downPayment +
     leaseRates +
     leasingFee +
+    buyout +
     leaseMaintenance +
-    leaseInsurance +
-    buyout;
+    leaseInsurance -
+    leaseEndValue;
 
 
   const buyMonthly =
@@ -624,10 +963,10 @@ function calculate() {
     leaseTotal / (years * 12);
 
 
-  /* Ergebnisse anzeigen */
+  /* AUSGABE KAUF */
 
-  document.getElementById('buyDepreciation').textContent =
-    money(buyDepreciation);
+  document.getElementById('buyPrice').textContent =
+    money(price);
 
   document.getElementById('buyInterest').textContent =
     money(buyInterest);
@@ -638,12 +977,17 @@ function calculate() {
   document.getElementById('buyInsurance').textContent =
     money(buyInsurance);
 
+  document.getElementById('buyRestwert').textContent =
+    '− ' + money(restwert);
+
   document.getElementById('buyTotal').textContent =
     money(buyTotal);
 
   document.getElementById('buyMonthly').textContent =
     money(buyMonthly);
 
+
+  /* AUSGABE LEASING */
 
   document.getElementById('leaseDown').textContent =
     money(downPayment);
@@ -663,12 +1007,20 @@ function calculate() {
   document.getElementById('leaseBuyout').textContent =
     money(buyout);
 
+  document.getElementById('leaseEndValue').textContent =
+    '− ' + money(leaseEndValue);
+
   document.getElementById('leaseTotal').textContent =
     money(leaseTotal);
 
   document.getElementById('leaseMonthly').textContent =
     money(leaseMonthly);
 
+  document.getElementById('resultYears').textContent =
+    years;
+
+
+  /* VERGLEICH */
 
   const difference =
     Math.abs(buyTotal - leaseTotal);
@@ -677,37 +1029,49 @@ function calculate() {
   if (buyTotal < leaseTotal) {
 
     document.getElementById('winner').innerHTML =
-      'Bei diesen Angaben ist der <strong>Kauf</strong> über ' +
-      years + ' Jahre um <strong>' +
+      'Bei diesen Angaben kostet der <strong>Kauf</strong> über ' +
+      years +
+      ' Jahre effektiv <strong>' +
       money(difference) +
-      '</strong> günstiger.';
+      '</strong> weniger.';
 
-  } else if (leaseTotal < buyTotal) {
+  }
+
+  else if (leaseTotal < buyTotal) {
 
     document.getElementById('winner').innerHTML =
-      'Bei diesen Angaben ist das <strong>Leasing</strong> über ' +
-      years + ' Jahre um <strong>' +
+      'Bei diesen Angaben kostet das <strong>Leasing</strong> über ' +
+      years +
+      ' Jahre effektiv <strong>' +
       money(difference) +
-      '</strong> günstiger.';
+      '</strong> weniger.';
 
-  } else {
+  }
+
+  else {
 
     document.getElementById('winner').innerHTML =
-      'Bei diesen Angaben sind <strong>Leasing und Kauf</strong> gleich teuer.';
+      'Bei diesen Angaben sind <strong>Kauf und Leasing</strong> effektiv gleich teuer.';
 
   }
 
 
-  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').style.display =
+    'block';
 
   document.getElementById('result').scrollIntoView({
     behavior: 'smooth',
     block: 'start'
   });
+
 }
+
+
+/* Beim Laden Rate berechnen */
+
+updateLeasingRate();
 
 </script>
 
 </body>
 </html>
-```
