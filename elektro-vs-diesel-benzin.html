@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Elektro, Diesel oder Benzin – Kostenvergleich Schweiz</title>
+  <meta name="description" content="Vergleiche die jährlichen und langfristigen Kosten von Elektroauto, Diesel und Benziner für dein Fahrprofil.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 20px;
+    }
+
+    .header-inner {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #6b7280;
+      font-size: 17px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .unit {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1f2937;
+    }
+
+    .results {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .result-box {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+
+    .result-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .result-value {
+      font-size: 27px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .result-small {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .winner {
+      background: #eef2ff;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .winner h2 {
+      margin: 0 0 8px;
+    }
+
+    .winner-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .difference {
+      margin-top: 8px;
+      color: #4b5563;
+    }
+
+    .note {
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .grid,
+      .three,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .container {
+        margin-top: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">RechnerSchweiz</div>
+    <a href="index.html" class="back">← Zurück</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Elektro, Diesel oder Benzin?</h1>
+    <p>
+      Was kostet dein Auto bei deinem persönlichen Fahrprofil?
+    </p>
+  </div>
+
+  <!-- FAHRPROFIL -->
+  <div class="card">
+    <h2>1. Dein Fahrprofil</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="km">Kilometer pro Jahr</label>
+        <input type="number" id="km" value="15000" min="1">
+        <div class="unit">km/Jahr</div>
+      </div>
+
+      <div>
+        <label for="years">Vergleichszeitraum</label>
+        <input type="number" id="years" value="5" min="1">
+        <div class="unit">Jahre</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ELEKTRO -->
+  <div class="card">
+    <h2>2. Elektroauto</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="electricity">Strompreis</label>
+        <input type="number" id="electricity" value="0.30" step="0.01" min="0">
+        <div class="unit">CHF/kWh</div>
+      </div>
+
+      <div>
+        <label for="evConsumption">Verbrauch</label>
+        <input type="number" id="evConsumption" value="18" step="0.1" min="0">
+        <div class="unit">kWh/100 km</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- DIESEL -->
+  <div class="card">
+    <h2>3. Diesel</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="dieselPrice">Dieselpreis</label>
+        <input type="number" id="dieselPrice" value="1.85" step="0.01" min="0">
+        <div class="unit">CHF/Liter</div>
+      </div>
+
+      <div>
+        <label for="dieselConsumption">Verbrauch</label>
+        <input type="number" id="dieselConsumption" value="6" step="0.1" min="0">
+        <div class="unit">Liter/100 km</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- BENZIN -->
+  <div class="card">
+    <h2>4. Benzin</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="petrolPrice">Benzinpreis</label>
+        <input type="number" id="petrolPrice" value="1.85" step="0.01" min="0">
+        <div class="unit">CHF/Liter</div>
+      </div>
+
+      <div>
+        <label for="petrolConsumption">Verbrauch</label>
+        <input type="number" id="petrolConsumption" value="7.5" step="0.1" min="0">
+        <div class="unit">Liter/100 km</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ZUSATZKOSTEN -->
+  <div class="card">
+    <h2>5. Weitere jährliche Kosten</h2>
+
+    <div class="three grid">
+
+      <div>
+        <label for="evOther">Elektro</label>
+        <input type="number" id="evOther" value="400" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+      <div>
+        <label for="dieselOther">Diesel</label>
+        <input type="number" id="dieselOther" value="650" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+      <div>
+        <label for="petrolOther">Benzin</label>
+        <input type="number" id="petrolOther" value="500" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+    </div>
+
+    <p class="note">
+      Hier kannst du z. B. Steuern, Wartung oder andere jährliche Kosten
+      berücksichtigen. Versicherung und Fahrzeugpreis werden bewusst nicht
+      berücksichtigt, damit der Vergleich auf den laufenden Kosten basiert.
+    </p>
+  </div>
+
+
+  <button onclick="calculate()">
+    Kosten vergleichen
+  </button>
+
+
+  <!-- ERGEBNIS -->
+  <div class="results" id="results">
+
+    <div class="winner">
+      <h2>Günstigste Variante</h2>
+      <div class="winner-value" id="winner"></div>
+      <div class="difference" id="winnerDifference"></div>
+    </div>
+
+
+    <div class="result-grid">
+
+      <div class="result-box">
+        <h3>⚡ Elektro</h3>
+        <div class="result-value" id="evTotal"></div>
+        <div class="result-small">über den gesamten Zeitraum</div>
+      </div>
+
+      <div class="result-box">
+        <h3>🛢️ Diesel</h3>
+        <div class="result-value" id="dieselTotal"></div>
+        <div class="result-small">über den gesamten Zeitraum</div>
+      </div>
+
+      <div class="result-box">
+        <h3>⛽ Benzin</h3>
+        <div class="result-value" id="petrolTotal"></div>
+        <div class="result-small">über den gesamten Zeitraum</div>
+      </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:20px;">
+
+      <h2>Kosten pro Jahr</h2>
+
+      <div class="result-grid">
+
+        <div class="result-box">
+          <div class="result-value" id="evYear"></div>
+          <div class="result-small">Elektro</div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="dieselYear"></div>
+          <div class="result-small">Diesel</div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="petrolYear"></div>
+          <div class="result-small">Benzin</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>Kosten pro Kilometer</h2>
+
+      <div class="result-grid">
+
+        <div class="result-box">
+          <div class="result-value" id="evKm"></div>
+          <div class="result-small">Elektro</div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="dieselKm"></div>
+          <div class="result-small">Diesel</div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="petrolKm"></div>
+          <div class="result-small">Benzin</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function formatCHF(value) {
+  return value.toLocaleString("de-CH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + " CHF";
+}
+
+
+function calculate() {
+
+  const km = parseFloat(document.getElementById("km").value);
+  const years = parseFloat(document.getElementById("years").value);
+
+  const electricity = parseFloat(document.getElementById("electricity").value);
+  const evConsumption = parseFloat(document.getElementById("evConsumption").value);
+
+  const dieselPrice = parseFloat(document.getElementById("dieselPrice").value);
+  const dieselConsumption = parseFloat(document.getElementById("dieselConsumption").value);
+
+  const petrolPrice = parseFloat(document.getElementById("petrolPrice").value);
+  const petrolConsumption = parseFloat(document.getElementById("petrolConsumption").value);
+
+  const evOther = parseFloat(document.getElementById("evOther").value);
+  const dieselOther = parseFloat(document.getElementById("dieselOther").value);
+  const petrolOther = parseFloat(document.getElementById("petrolOther").value);
+
+
+  // Energieverbrauch pro Jahr
+
+  const evEnergy = km * evConsumption / 100;
+  const dieselLitres = km * dieselConsumption / 100;
+  const petrolLitres = km * petrolConsumption / 100;
+
+
+  // Energiekosten pro Jahr
+
+  const evEnergyCost = evEnergy * electricity;
+  const dieselFuelCost = dieselLitres * dieselPrice;
+  const petrolFuelCost = petrolLitres * petrolPrice;
+
+
+  // Gesamtkosten pro Jahr
+
+  const evYear = evEnergyCost + evOther;
+  const dieselYear = dieselFuelCost + dieselOther;
+  const petrolYear = petrolFuelCost + petrolOther;
+
+
+  // Gesamtkosten Zeitraum
+
+  const evTotal = evYear * years;
+  const dieselTotal = dieselYear * years;
+  const petrolTotal = petrolYear * years;
+
+
+  // Kosten pro KM
+
+  const evKm = evYear / km;
+  const dieselKm = dieselYear / km;
+  const petrolKm = petrolYear / km;
+
+
+  // Ergebnisse anzeigen
+
+  document.getElementById("evTotal").textContent = formatCHF(evTotal);
+  document.getElementById("dieselTotal").textContent = formatCHF(dieselTotal);
+  document.getElementById("petrolTotal").textContent = formatCHF(petrolTotal);
+
+  document.getElementById("evYear").textContent = formatCHF(evYear);
+  document.getElementById("dieselYear").textContent = formatCHF(dieselYear);
+  document.getElementById("petrolYear").textContent = formatCHF(petrolYear);
+
+  document.getElementById("evKm").textContent = evKm.toFixed(2) + " CHF/km";
+  document.getElementById("dieselKm").textContent = dieselKm.toFixed(2) + " CHF/km";
+  document.getElementById("petrolKm").textContent = petrolKm.toFixed(2) + " CHF/km";
+
+
+  // Günstigste Variante bestimmen
+
+  const values = [
+    { name: "Elektro", value: evTotal },
+    { name: "Diesel", value: dieselTotal },
+    { name: "Benzin", value: petrolTotal }
+  ];
+
+  values.sort((a, b) => a.value - b.value);
+
+  const cheapest = values[0];
+  const second = values[1];
+
+  document.getElementById("winner").textContent =
+    cheapest.name + " – " + formatCHF(cheapest.value);
+
+  document.getElementById("winnerDifference").textContent =
+    formatCHF(second.value - cheapest.value) +
+    " günstiger als die nächstgünstige Variante über " +
+    years + " Jahre.";
+
+
+  document.getElementById("results").style.display = "block";
+
+  document.getElementById("results").scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
