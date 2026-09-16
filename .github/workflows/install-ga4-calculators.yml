@@ -1,0 +1,68 @@
+name: Install GA4 on calculator pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  add-ga4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add Google Analytics to calculator pages
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          pages = [
+              'leasing-vs-kauf.html',
+              'oev-vs-auto.html',
+              'elektro-vs-diesel-benzin.html',
+              'auto-behalten-vs-neu.html',
+              'elektroauto-gesamtbetrieb.html',
+              'solar-vs-strombezug.html',
+              'waermepumpe-vs-heizung.html',
+              'batterie-vs-keine-batterie.html',
+              'mieten-vs-kaufen.html',
+              'angestellt-vs-selbststaendig.html',
+              'kaffee-rechner.html',
+              'takeaway-vs-kochen.html',
+              'pizza-selbermachen-vs-bestellen.html',
+              'feierabendbier-rechner.html',
+              'dusche-kosten-rechner.html',
+              'raucher-kosten-rechner.html',
+          ]
+
+          tag = '''<!-- Google tag (gtag.js) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-C45GVFW5VC"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-C45GVFW5VC');
+          </script>'''
+
+          for name in pages:
+              path = Path(name)
+              text = path.read_text(encoding='utf-8')
+              if 'G-C45GVFW5VC' not in text:
+                  text = text.replace('<head>', '<head>\n' + tag, 1)
+                  path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *.html
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+          else
+            git commit -m "[skip ci] Add GA4 to calculator pages"
+            git push
+          fi
