@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batterie oder keine Batterie? – RechnerSchweiz</title>
+<meta name="description" content="Berechne, ob sich ein Batteriespeicher für deine Solaranlage finanziell lohnt.">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fa;color:#172033}header{background:#fff;border-bottom:1px solid #e5e7eb;padding:20px}.header-inner{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center}.logo{font-size:22px;font-weight:700}.back{color:#667085;text-decoration:none;font-size:14px}.container{max-width:900px;margin:40px auto;padding:0 20px}.hero{text-align:center;margin-bottom:35px}.hero h1{font-size:36px;margin-bottom:10px}.hero p{color:#667085;font-size:17px}.card{background:#fff;border-radius:14px;padding:25px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.06)}.card h2{margin-top:0;font-size:21px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}label{display:block;font-size:14px;font-weight:bold;margin-bottom:7px}input{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:8px;font-size:16px}.unit{color:#6b7280;font-size:13px;margin-top:5px}button{width:100%;padding:16px;border:none;border-radius:10px;background:#111827;color:#fff;font-size:18px;font-weight:bold;cursor:pointer}.results{display:none;margin-top:30px}.saving{background:#eef2ff;border-radius:12px;padding:25px;text-align:center;margin-bottom:20px}.saving h2{margin:0 0 8px}.saving-value{font-size:30px;font-weight:bold}.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.result-box{background:#fff;border-radius:12px;padding:20px;text-align:center;border:1px solid #e5e7eb}.result-box h3{margin:0 0 10px;font-size:18px}.result-value{font-size:27px;font-weight:bold}.result-small{color:#6b7280;font-size:13px;margin-top:5px}.note{color:#667085;font-size:13px;line-height:1.5;margin-top:18px}.disclaimer{background:#fff;border-top:1px solid #e5e7eb;padding:22px 20px;color:#68717d;font-size:12px;line-height:1.5}.disclaimer strong{color:#3f4650}@media(max-width:700px){.grid,.result-grid{grid-template-columns:1fr}.hero h1{font-size:28px}.container{margin-top:25px}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><div class="logo">RechnerSchweiz</div><a href="index.html" class="back">← Zurück</a></div></header>
+<div class="container">
+<div class="hero"><h1>Batterie oder keine Batterie?</h1><p>Berechne, ob sich ein Batteriespeicher für deine PV-Anlage über den gewählten Zeitraum rechnet.</p></div>
+<div class="card">
+<h2>1. Deine Solaranlage</h2>
+<div class="grid">
+<div><label for="production">Solarproduktion pro Jahr</label><input id="production" type="number" value="8500" min="0"><div class="unit">kWh/Jahr</div></div>
+<div><label for="consumption">Stromverbrauch pro Jahr</label><input id="consumption" type="number" value="5000" min="0"><div class="unit">kWh/Jahr</div></div>
+<div><label for="selfNoBattery">Eigenverbrauch ohne Batterie</label><input id="selfNoBattery" type="number" value="35" min="0" max="100"><div class="unit">% der Solarproduktion</div></div>
+<div><label for="selfWithBattery">Eigenverbrauch mit Batterie</label><input id="selfWithBattery" type="number" value="70" min="0" max="100"><div class="unit">% der Solarproduktion</div></div>
+</div>
+</div>
+<div class="card">
+<h2>2. Strompreise</h2>
+<div class="grid">
+<div><label for="gridPrice">Strompreis aus dem Netz</label><input id="gridPrice" type="number" value="0.30" min="0" step="0.01"><div class="unit">CHF/kWh</div></div>
+<div><label for="feedIn">Einspeisevergütung</label><input id="feedIn" type="number" value="0.13" min="0" step="0.01"><div class="unit">CHF/kWh</div></div>
+</div>
+</div>
+<div class="card">
+<h2>3. Batteriespeicher</h2>
+<div class="grid">
+<div><label for="batteryCost">Kosten Batteriespeicher</label><input id="batteryCost" type="number" value="10000" min="0"><div class="unit">CHF einmalig</div></div>
+<div><label for="running">Laufende Kosten</label><input id="running" type="number" value="100" min="0"><div class="unit">CHF/Jahr</div></div>
+<div><label for="years">Vergleichszeitraum</label><input id="years" type="number" value="15" min="1" max="30"><div class="unit">Jahre</div></div>
+</div>
+</div>
+<button onclick="calculate()">Batterie vergleichen</button>
+<div class="results" id="results">
+<div class="saving"><h2 id="title">Ergebnis</h2><div class="saving-value" id="saving"></div><div id="savingText"></div></div>
+<div class="result-grid">
+<div class="result-box"><h3>☀️ Ohne Batterie</h3><div class="result-value" id="noTotal"></div><div class="result-small">Gesamtkosten über den Zeitraum</div></div>
+<div class="result-box"><h3>🔋 Mit Batterie</h3><div class="result-value" id="withTotal"></div><div class="result-small">Gesamtkosten über den Zeitraum</div></div>
+<div class="result-box"><div class="result-value" id="noGrid"></div><div class="result-small">Netzbezug kWh/Jahr ohne Batterie</div></div>
+<div class="result-box"><div class="result-value" id="withGrid"></div><div class="result-small">Netzbezug kWh/Jahr mit Batterie</div></div>
+</div>
+<div class="card" style="margin-top:20px"><h2>Amortisation</h2><div class="result-box"><div class="result-value" id="payback"></div><div class="result-small">Zeit, bis die zusätzliche Investition durch die jährliche Einsparung ausgeglichen ist</div></div></div>
+<div class="note">Die Berechnung verwendet feste Eigenverbrauchsquoten. Batterieeffizienz, Degradation, Ersatz nach Lebensdauer, Finanzierung und veränderte Strom- oder Einspeisepreise werden nicht berücksichtigt.</div>
+</div>
+</div>
+<div class="disclaimer"><strong>Haftungsausschluss:</strong> Die Rechner von RechnerSchweiz dienen ausschliesslich der unverbindlichen Orientierung. Für die Richtigkeit, Vollständigkeit und Aktualität der verwendeten Angaben, Annahmen und Berechnungen wird keine Gewähr übernommen. Ergebnisse können von der tatsächlichen Situation abweichen. RechnerSchweiz übernimmt, soweit gesetzlich zulässig, keine Haftung für Schäden oder Nachteile, die aus der Nutzung der Rechner oder aus darauf basierenden Entscheidungen entstehen. Bitte prüfe relevante Angaben vor finanziellen oder technischen Entscheidungen selbst.</div>
+<script>
+function n(id){return Math.max(0,parseFloat(document.getElementById(id).value)||0)}
+function money(v){return v.toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})+' CHF'}
+function kwh(v){return v.toLocaleString('de-CH',{maximumFractionDigits:0})}
+function calculate(){
+ const production=n('production'),consumption=n('consumption'),noPct=n('selfNoBattery')/100,withPct=n('selfWithBattery')/100,gridPrice=n('gridPrice'),feedIn=n('feedIn'),batteryCost=n('batteryCost'),running=n('running'),years=Math.max(1,Math.min(30,n('years')));
+ const noSelf=Math.min(production*noPct,consumption); const withSelf=Math.min(production*withPct,consumption);
+ const noExport=Math.max(production-noSelf,0); const withExport=Math.max(production-withSelf,0);
+ const noGrid=Math.max(consumption-noSelf,0); const withGrid=Math.max(consumption-withSelf,0);
+ const noYear=noGrid*gridPrice-noExport*feedIn;
+ const withYear=withGrid*gridPrice-withExport*feedIn+running;
+ const noTotal=noYear*years; const withTotal=batteryCost+withYear*years;
+ const saving=noTotal-withTotal; const annualSaving=noYear-withYear;
+ document.getElementById('noTotal').textContent=money(noTotal); document.getElementById('withTotal').textContent=money(withTotal); document.getElementById('noGrid').textContent=kwh(noGrid); document.getElementById('withGrid').textContent=kwh(withGrid);
+ if(saving>0){document.getElementById('title').textContent='Batterie ist über den Zeitraum günstiger';document.getElementById('saving').textContent=money(saving);document.getElementById('savingText').textContent='Ersparnis gegenüber dem Betrieb ohne Batteriespeicher.'}else if(saving<0){document.getElementById('title').textContent='Batterie ist über den Zeitraum teurer';document.getElementById('saving').textContent=money(Math.abs(saving));document.getElementById('savingText').textContent='Mehrkosten gegenüber dem Betrieb ohne Batteriespeicher.'}else{document.getElementById('title').textContent='Beide Varianten kosten gleich viel';document.getElementById('saving').textContent='0.00 CHF';document.getElementById('savingText').textContent='Kein Kostenunterschied über den Vergleichszeitraum.'}
+ document.getElementById('payback').textContent=annualSaving>0?(batteryCost/annualSaving).toLocaleString('de-CH',{minimumFractionDigits:1,maximumFractionDigits:1})+' Jahre':'Keine Amortisation'; document.getElementById('results').style.display='block'; document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
