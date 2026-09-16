@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Diesel oder Benzin? – Kostenvergleich Schweiz</title>
+
+  <meta name="description"
+        content="Vergleiche die Kosten von Diesel und Benzin in der Schweiz. Berechne Treibstoffkosten pro Jahr, Monat und Kilometer.">
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f8fa;
+      color: #17202a;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav {
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      color: #17202a;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #2563eb;
+    }
+
+    .back {
+      color: #5f6874;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .hero {
+      background: #ffffff;
+      text-align: center;
+      padding: 50px 20px 45px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 38px;
+      line-height: 1.15;
+      margin-bottom: 13px;
+    }
+
+    .hero p {
+      color: #68717d;
+      max-width: 700px;
+      margin: auto;
+      font-size: 17px;
+    }
+
+    .calculator {
+      padding: 35px 0 70px;
+    }
+
+    .box {
+      background: #ffffff;
+      border: 1px solid #e3e6ea;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 22px;
+    }
+
+    .box h2 {
+      font-size: 21px;
+      margin-bottom: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 25px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d5dae0;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #ffffff;
+    }
+
+    .field small {
+      display: block;
+      color: #8a929c;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .button {
+      width: 100%;
+      border: 0;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 15px;
+      border-radius: 9px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #1d4ed8;
+    }
+
+    #result {
+      display: none;
+    }
+
+    .result-head {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .result-head h2 {
+      margin-bottom: 5px;
+    }
+
+    .result-head p {
+      color: #68717d;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .result-card {
+      border: 1px solid #dfe3e8;
+      border-radius: 12px;
+      padding: 23px;
+    }
+
+    .result-card h3 {
+      font-size: 20px;
+      margin-bottom: 17px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef0f2;
+      font-size: 14px;
+    }
+
+    .result-row strong {
+      white-space: nowrap;
+    }
+
+    .total {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #dfe3e8;
+
+      display: flex;
+      justify-content: space-between;
+
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .difference {
+      margin-top: 22px;
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .difference strong {
+      color: #2563eb;
+    }
+
+    .break-even {
+      margin-top: 18px;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .explanation {
+      margin-top: 25px;
+      color: #606975;
+      font-size: 14px;
+    }
+
+    .note {
+      background: #f8fafc;
+      border-radius: 9px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #68717d;
+    }
+
+    @media (max-width: 700px) {
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .grid,
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .box {
+        padding: 22px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+      Rechner<span>Schweiz</span>
+    </a>
+
+    <a href="index.html" class="back">
+      ← Zur Übersicht
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<section class="hero">
+
+  <div class="badge">
+    🇨🇭 Schweizer Autokostenvergleich
+  </div>
+
+  <h1>
+    Diesel oder Benzin?
+  </h1>
+
+  <p>
+    Berechne, welcher Antrieb bei deinem Fahrprofil
+    weniger Treibstoffkosten verursacht.
+  </p>
+
+</section>
+
+
+
+<section class="calculator">
+
+  <div class="container">
+
+
+    <!-- FAHRPROFIL -->
+
+    <div class="box">
+
+      <h2>1. Dein Fahrprofil</h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="km">
+            Kilometer pro Jahr
+          </label>
+
+          <input
+            type="number"
+            id="km"
+            value="15000"
+            min="0"
+          >
+
+          <small>
+            km pro Jahr
+          </small>
+
+        </div>
+
+        <div class="field">
+
+          <label for="years">
+            Vergleichszeitraum
+          </label>
+
+          <input
+            type="number"
+            id="years"
+            value="5"
+            min="1"
+            max="30"
+          >
+
+          <small>
+            Jahre
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- BENZIN -->
+
+    <div class="box">
+
+      <h2>2. Benzin</h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="petrolPrice">
+            Benzinpreis
+          </label>
+
+          <input
+            type="number"
+            id="petrolPrice"
+            value="1.80"
+            min="0"
+            step="0.01"
+          >
+
+          <small>
+            CHF pro Liter
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="petrolConsumption">
+            Verbrauch
+          </label>
+
+          <input
+            type="number"
+            id="petrolConsumption"
+            value="7.0"
+            min="0"
+            step="0.1"
+          >
+
+          <small>
+            Liter pro 100 km
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- DIESEL -->
+
+    <div class="box">
+
+      <h2>3. Diesel</h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="dieselPrice">
+            Dieselpreis
+          </label>
+
+          <input
+            type="number"
+            id="dieselPrice"
+            value="1.90"
+            min="0"
+            step="0.01"
+          >
+
+          <small>
+            CHF pro Liter
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="dieselConsumption">
+            Verbrauch
+          </label>
+
+          <input
+            type="number"
+            id="dieselConsumption"
+            value="5.5"
+            min="0"
+            step="0.1"
+          >
+
+          <small>
+            Liter pro 100 km
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ZUSATZKOSTEN -->
+
+    <div class="box">
+
+      <h2>4. Weitere Kosten</h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="petrolTax">
+            Benzin – Steuer pro Jahr
+          </label>
+
+          <input
+            type="number"
+            id="petrolTax"
+            value="400"
+            min="0"
+          >
+
+          <small>
+            CHF pro Jahr
+          </small>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="dieselTax">
+            Diesel – Steuer pro Jahr
+          </label>
+
+          <input
+            type="number"
+            id="dieselTax"
+            value="650"
+            min="0"
+          >
+
+          <small>
+            CHF pro Jahr
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- BUTTON -->
+
+    <div class="box">
+
+      <button
+        class="button"
+        onclick="calculate()"
+      >
+        Diesel und Benzin vergleichen
+      </button>
+
+    </div>
+
+
+
+    <!-- RESULTAT -->
+
+    <div class="box" id="result">
+
+      <div class="result-head">
+
+        <h2>
+          Dein Ergebnis
+        </h2>
+
+        <p>
+          Bei
+          <span id="resultKm"></span>
+          km pro Jahr über
+          <span id="resultYears"></span>
+          Jahre
+        </p>
+
+      </div>
+
+
+
+      <div class="comparison">
+
+
+        <!-- BENZIN RESULTAT -->
+
+        <div class="result-card">
+
+          <h3>
+            ⛽ Benzin
+          </h3>
+
+
+          <div class="result-row">
+
+            <span>
+              Treibstoff pro Jahr
+            </span>
+
+            <strong id="petrolFuelYear">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="result-row">
+
+            <span>
+              Steuer pro Jahr
+            </span>
+
+            <strong id="petrolTaxResult">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="result-row">
+
+            <span>
+              Kosten pro km
+            </span>
+
+            <strong id="petrolPerKm">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="total">
+
+            <span>
+              Gesamtkosten
+            </span>
+
+            <span id="petrolTotal">
+              CHF 0
+            </span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DIESEL RESULTAT -->
+
+        <div class="result-card">
+
+          <h3>
+            🛢️ Diesel
+          </h3>
+
+
+          <div class="result-row">
+
+            <span>
+              Treibstoff pro Jahr
+            </span>
+
+            <strong id="dieselFuelYear">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="result-row">
+
+            <span>
+              Steuer pro Jahr
+            </span>
+
+            <strong id="dieselTaxResult">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="result-row">
+
+            <span>
+              Kosten pro km
+            </span>
+
+            <strong id="dieselPerKm">
+              CHF 0
+            </strong>
+
+          </div>
+
+
+          <div class="total">
+
+            <span>
+              Gesamtkosten
+            </span>
+
+            <span id="dieselTotal">
+              CHF 0
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <div
+        class="difference"
+        id="difference">
+      </div>
+
+
+
+      <div
+        class="break-even"
+        id="breakEven">
+      </div>
+
+
+
+      <div class="explanation">
+
+        <strong>
+          So wird gerechnet
+        </strong>
+
+        <br><br>
+
+        Die Treibstoffkosten werden anhand deiner
+        jährlichen Kilometerleistung, des Verbrauchs
+        und des jeweiligen Literpreises berechnet.
+
+        <br><br>
+
+        Zusätzlich werden die von dir eingegebenen
+        jährlichen Fahrzeugsteuern berücksichtigt.
+
+      </div>
+
+
+
+      <div class="note">
+
+        <strong>
+          Hinweis:
+        </strong>
+
+        Der tatsächliche Verbrauch kann je nach Fahrzeug,
+        Fahrweise, Strecke und Wetter deutlich vom
+        Herstellerwert abweichen.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<script>
+
+
+function money(value) {
+
+  return new Intl.NumberFormat(
+    'de-CH',
+    {
+      style: 'currency',
+      currency: 'CHF',
+      maximumFractionDigits: 0
+    }
+  ).format(value);
+
+}
+
+
+function moneyDecimal(value) {
+
+  return new Intl.NumberFormat(
+    'de-CH',
+    {
+      style: 'currency',
+      currency: 'CHF',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ).format(value);
+
+}
+
+
+
+function calculate() {
+
+
+  const km =
+    Number(
+      document.getElementById('km').value
+    ) || 0;
+
+
+  const years =
+    Number(
+      document.getElementById('years').value
+    ) || 1;
+
+
+  const petrolPrice =
+    Number(
+      document.getElementById('petrolPrice').value
+    ) || 0;
+
+
+  const petrolConsumption =
+    Number(
+      document.getElementById('petrolConsumption').value
+    ) || 0;
+
+
+  const dieselPrice =
+    Number(
+      document.getElementById('dieselPrice').value
+    ) || 0;
+
+
+  const dieselConsumption =
+    Number(
+      document.getElementById('dieselConsumption').value
+    ) || 0;
+
+
+  const petrolTax =
+    Number(
+      document.getElementById('petrolTax').value
+    ) || 0;
+
+
+  const dieselTax =
+    Number(
+      document.getElementById('dieselTax').value
+    ) || 0;
+
+
+
+  /*
+    BENZIN
+
+    Liter pro Jahr:
+    km × Verbrauch / 100
+
+    Kosten:
+    Liter × Preis
+  */
+
+  const petrolLiters =
+    km *
+    petrolConsumption /
+    100;
+
+
+  const petrolFuelYear =
+    petrolLiters *
+    petrolPrice;
+
+
+  const petrolTotal =
+    (
+      petrolFuelYear +
+      petrolTax
+    ) *
+    years;
+
+
+  const petrolPerKm =
+    (
+      petrolFuelYear +
+      petrolTax
+    ) /
+    km;
+
+
+
+  /*
+    DIESEL
+  */
+
+  const dieselLiters =
+    km *
+    dieselConsumption /
+    100;
+
+
+  const dieselFuelYear =
+    dieselLiters *
+    dieselPrice;
+
+
+  const dieselTotal =
+    (
+      dieselFuelYear +
+      dieselTax
+    ) *
+    years;
+
+
+  const dieselPerKm =
+    (
+      dieselFuelYear +
+      dieselTax
+    ) /
+    km;
+
+
+
+  /*
+    DIFFERENZ
+  */
+
+  const difference =
+    Math.abs(
+      petrolTotal -
+      dieselTotal
+    );
+
+
+
+  /* Ausgabe */
+
+  document.getElementById('resultKm').textContent =
+    new Intl.NumberFormat('de-CH').format(km);
+
+
+  document.getElementById('resultYears').textContent =
+    years;
+
+
+
+  document.getElementById('petrolFuelYear').textContent =
+    money(petrolFuelYear);
+
+
+  document.getElementById('petrolTaxResult').textContent =
+    money(petrolTax);
+
+
+  document.getElementById('petrolPerKm').textContent =
+    moneyDecimal(petrolPerKm);
+
+
+  document.getElementById('petrolTotal').textContent =
+    money(petrolTotal);
+
+
+
+  document.getElementById('dieselFuelYear').textContent =
+    money(dieselFuelYear);
+
+
+  document.getElementById('dieselTaxResult').textContent =
+    money(dieselTax);
+
+
+  document.getElementById('dieselPerKm').textContent =
+    moneyDecimal(dieselPerKm);
+
+
+  document.getElementById('dieselTotal').textContent =
+    money(dieselTotal);
+
+
+
+  /*
+    Vergleich
+  */
+
+  if (petrolTotal < dieselTotal) {
+
+    document.getElementById('difference').innerHTML =
+
+      'Bei deinem Fahrprofil ist <strong>Benzin</strong> über ' +
+      years +
+      ' Jahre um <strong>' +
+      money(difference) +
+      '</strong> günstiger.';
+
+  }
+
+  else if (dieselTotal < petrolTotal) {
+
+    document.getElementById('difference').innerHTML =
+
+      'Bei deinem Fahrprofil ist <strong>Diesel</strong> über ' +
+      years +
+      ' Jahre um <strong>' +
+      money(difference) +
+      '</strong> günstiger.';
+
+  }
+
+  else {
+
+    document.getElementById('difference').innerHTML =
+
+      'Bei deinem Fahrprofil sind <strong>Diesel und Benzin</strong> gleich teuer.';
+
+  }
+
+
+
+  /*
+    BREAK-EVEN-KILOMETER
+
+    Wir lösen:
+
+    Benzin-Kosten/km × km + Benzinsteuer
+    =
+    Diesel-Kosten/km × km + Dieselsteuer
+
+    Nach km auflösen.
+  */
+
+  const petrolFuelPerKm =
+    petrolConsumption /
+    100 *
+    petrolPrice;
+
+
+  const dieselFuelPerKm =
+    dieselConsumption /
+    100 *
+    dieselPrice;
+
+
+  const differencePerKm =
+    petrolFuelPerKm -
+    dieselFuelPerKm;
+
+
+  let breakEvenText;
+
+
+  if (
+    differencePerKm > 0 &&
+    dieselTax > petrolTax
+  ) {
+
+    const breakEvenKm =
+      (dieselTax - petrolTax) /
+      differencePerKm;
+
+
+    if (breakEvenKm > 0) {
+
+      breakEvenText =
+
+        'Diesel erreicht bei ungefähr <strong>' +
+        new Intl.NumberFormat('de-CH').format(
+          Math.round(breakEvenKm)
+        ) +
+        ' km pro Jahr</strong> den Kostenvorteil beim Treibstoff und der Steuer.';
+
+    }
+
+    else {
+
+      breakEvenText =
+        'Bei den eingegebenen Werten gibt es keinen positiven Break-even-Punkt.';
+
+    }
+
+  }
+
+  else if (differencePerKm <= 0) {
+
+    breakEvenText =
+      'Bei den eingegebenen Preisen und Verbräuchen ist Diesel beim Treibstoff pro Kilometer nicht günstiger.';
+
+  }
+
+  else {
+
+    breakEvenText =
+      'Diesel hat bei den eingegebenen Werten bereits bei sehr geringer Fahrleistung einen Kostenvorteil.';
+
+  }
+
+
+  document.getElementById('breakEven').innerHTML =
+    breakEvenText;
+
+
+
+  document.getElementById('result').style.display =
+    'block';
+
+
+  document.getElementById('result').scrollIntoView({
+
+    behavior: 'smooth',
+
+    block: 'start'
+
+  });
+
+}
+
+
+</script>
+
+
+</body>
+</html>
