@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Wärmepumpe oder alte Heizung – Kostenvergleich Schweiz</title>
+  <meta name="description" content="Berechne, ob sich eine Wärmepumpe gegenüber deiner bestehenden Heizung lohnt.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 20px;
+    }
+
+    .header-inner {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #6b7280;
+      font-size: 17px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .unit {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1f2937;
+    }
+
+    .results {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .result-box {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+
+    .result-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .result-value {
+      font-size: 27px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .result-small {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .saving {
+      background: #eef2ff;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .saving h2 {
+      margin: 0 0 8px;
+    }
+
+    .saving-value {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .note {
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 700px) {
+      .grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .container {
+        margin-top: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">RechnerSchweiz</div>
+    <a href="index.html" class="back">← Zurück</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Wärmepumpe oder alte Heizung?</h1>
+    <p>
+      Berechne, wann sich der Wechsel auf eine Wärmepumpe finanziell lohnt.
+    </p>
+  </div>
+
+
+  <!-- VERBRAUCH -->
+  <div class="card">
+    <h2>1. Dein Heizbedarf</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="heatingEnergy">Bisheriger Energieverbrauch</label>
+        <input type="number" id="heatingEnergy" value="20000" min="0">
+        <div class="unit">kWh/Jahr</div>
+      </div>
+
+      <div>
+        <label for="years">Vergleichszeitraum</label>
+        <input type="number" id="years" value="15" min="1">
+        <div class="unit">Jahre</div>
+      </div>
+
+    </div>
+
+    <p class="note">
+      Bei Öl oder Gas kannst du den bisherigen Verbrauch in kWh eingeben.
+      Bei einer Ölheizung entspricht 1 Liter Heizöl ungefähr 10 kWh.
+    </p>
+  </div>
+
+
+  <!-- ALTE HEIZUNG -->
+  <div class="card">
+    <h2>2. Bestehende Heizung</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="oldPrice">Energiepreis</label>
+        <input type="number" id="oldPrice" value="0.12" step="0.01" min="0">
+        <div class="unit">CHF/kWh</div>
+      </div>
+
+      <div>
+        <label for="oldEfficiency">Wirkungsgrad</label>
+        <input type="number" id="oldEfficiency" value="85" min="1" max="100">
+        <div class="unit">%</div>
+      </div>
+
+      <div>
+        <label for="oldMaintenance">Wartung / Unterhalt</label>
+        <input type="number" id="oldMaintenance" value="500" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+      <div>
+        <label for="oldOther">Weitere Kosten</label>
+        <input type="number" id="oldOther" value="0" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- WÄRMEPUMPE -->
+  <div class="card">
+    <h2>3. Wärmepumpe</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="heatPumpCost">Investition</label>
+        <input type="number" id="heatPumpCost" value="35000" min="0">
+        <div class="unit">CHF einmalig</div>
+      </div>
+
+      <div>
+        <label for="cop">Jahresarbeitszahl (JAZ)</label>
+        <input type="number" id="cop" value="3.5" step="0.1" min="1">
+        <div class="unit">
+          z. B. 3.5 = 3.5 kWh Wärme aus 1 kWh Strom
+        </div>
+      </div>
+
+      <div>
+        <label for="electricityPrice">Strompreis</label>
+        <input type="number" id="electricityPrice" value="0.30" step="0.01" min="0">
+        <div class="unit">CHF/kWh</div>
+      </div>
+
+      <div>
+        <label for="heatPumpMaintenance">Wartung / Unterhalt</label>
+        <input type="number" id="heatPumpMaintenance" value="300" min="0">
+        <div class="unit">CHF/Jahr</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- FÖRDERUNG -->
+  <div class="card">
+    <h2>4. Förderung</h2>
+
+    <div class="grid">
+
+      <div>
+        <label for="subsidy">Förderbeitrag</label>
+        <input type="number" id="subsidy" value="0" min="0">
+        <div class="unit">CHF einmalig</div>
+      </div>
+
+    </div>
+
+    <p class="note">
+      Förderbeiträge unterscheiden sich je nach Kanton, Gemeinde und Anlage.
+      Gib hier deinen tatsächlichen Förderbeitrag ein.
+    </p>
+  </div>
+
+
+  <button onclick="calculate()">
+    Vergleich berechnen
+  </button>
+
+
+  <!-- ERGEBNIS -->
+  <div class="results" id="results">
+
+    <div class="saving">
+      <h2>Ersparnis mit Wärmepumpe</h2>
+      <div class="saving-value" id="saving"></div>
+      <div id="savingText"></div>
+    </div>
+
+
+    <div class="result-grid">
+
+      <div class="result-box">
+        <h3>🔥 Alte Heizung</h3>
+        <div class="result-value" id="oldTotal"></div>
+        <div class="result-small">
+          über den gesamten Zeitraum
+        </div>
+      </div>
+
+      <div class="result-box">
+        <h3>♻️ Wärmepumpe</h3>
+        <div class="result-value" id="heatPumpTotal"></div>
+        <div class="result-small">
+          inkl. Investition und Förderung
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:20px;">
+
+      <h2>Jährliche Kosten</h2>
+
+      <div class="result-grid">
+
+        <div class="result-box">
+          <div class="result-value" id="oldYear"></div>
+          <div class="result-small">
+            Alte Heizung
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="heatPumpYear"></div>
+          <div class="result-small">
+            Wärmepumpe
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>Energieverbrauch</h2>
+
+      <div class="result-grid">
+
+        <div class="result-box">
+          <div class="result-value" id="oldEnergy"></div>
+          <div class="result-small">
+            Energie alte Heizung
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-value" id="heatPumpEnergy"></div>
+          <div class="result-small">
+            Strom Wärmepumpe
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>Amortisation</h2>
+
+      <div class="result-box">
+        <div class="result-value" id="payback"></div>
+        <div class="result-small">
+          voraussichtliche Amortisationsdauer
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function formatCHF(value) {
+  return value.toLocaleString("de-CH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + " CHF";
+}
+
+
+function calculate() {
+
+  const heatingEnergy =
+    parseFloat(document.getElementById("heatingEnergy").value);
+
+  const years =
+    parseFloat(document.getElementById("years").value);
+
+  const oldPrice =
+    parseFloat(document.getElementById("oldPrice").value);
+
+  const oldEfficiency =
+    parseFloat(document.getElementById("oldEfficiency").value) / 100;
+
+  const oldMaintenance =
+    parseFloat(document.getElementById("oldMaintenance").value);
+
+  const oldOther =
+    parseFloat(document.getElementById("oldOther").value);
+
+  const heatPumpCost =
+    parseFloat(document.getElementById("heatPumpCost").value);
+
+  const cop =
+    parseFloat(document.getElementById("cop").value);
+
+  const electricityPrice =
+    parseFloat(document.getElementById("electricityPrice").value);
+
+  const heatPumpMaintenance =
+    parseFloat(document.getElementById("heatPumpMaintenance").value);
+
+  const subsidy =
+    parseFloat(document.getElementById("subsidy").value);
+
+
+  // Tatsächlich benötigte Brennstoffenergie
+  const oldEnergy =
+    heatingEnergy / oldEfficiency;
+
+
+  // Kosten alte Heizung
+  const oldEnergyCost =
+    oldEnergy * oldPrice;
+
+  const oldYear =
+    oldEnergyCost
+    + oldMaintenance
+    + oldOther;
+
+
+  // Strombedarf Wärmepumpe
+  const heatPumpEnergy =
+    heatingEnergy / cop;
+
+
+  // Kosten Wärmepumpe pro Jahr
+  const heatPumpElectricityCost =
+    heatPumpEnergy * electricityPrice;
+
+  const heatPumpYear =
+    heatPumpElectricityCost
+    + heatPumpMaintenance;
+
+
+  // Gesamtkosten
+  const oldTotal =
+    oldYear * years;
+
+  const heatPumpTotal =
+    (heatPumpCost - subsidy)
+    + (heatPumpYear * years);
+
+
+  // Ersparnis
+  const saving =
+    oldTotal - heatPumpTotal;
+
+
+  // Jährliche Ersparnis
+  const annualSaving =
+    oldYear - heatPumpYear;
+
+
+  // Amortisation
+  let payback;
+
+  if (annualSaving > 0) {
+
+    const netInvestment =
+      heatPumpCost - subsidy;
+
+    payback =
+      netInvestment / annualSaving;
+
+    payback =
+      payback.toLocaleString("de-CH", {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      }) + " Jahre";
+
+  } else {
+
+    payback = "Keine Amortisation";
+
+  }
+
+
+  // Ergebnisse
+  document.getElementById("oldTotal").textContent =
+    formatCHF(oldTotal);
+
+  document.getElementById("heatPumpTotal").textContent =
+    formatCHF(heatPumpTotal);
+
+  document.getElementById("oldYear").textContent =
+    formatCHF(oldYear);
+
+  document.getElementById("heatPumpYear").textContent =
+    formatCHF(heatPumpYear);
+
+  document.getElementById("oldEnergy").textContent =
+    Math.round(oldEnergy).toLocaleString("de-CH")
+    + " kWh";
+
+  document.getElementById("heatPumpEnergy").textContent =
+    Math.round(heatPumpEnergy).toLocaleString("de-CH")
+    + " kWh";
+
+  document.getElementById("saving").textContent =
+    formatCHF(Math.abs(saving));
+
+
+  if (saving >= 0) {
+
+    document.getElementById("savingText").textContent =
+      "über " + years +
+      " Jahre gegenüber der bestehenden Heizung.";
+
+  } else {
+
+    document.getElementById("savingText").textContent =
+      "Mehrkosten von " +
+      formatCHF(Math.abs(saving)) +
+      " über " + years + " Jahre.";
+
+  }
+
+
+  document.getElementById("payback").textContent =
+    payback;
+
+
+  document.getElementById("results").style.display = "block";
+
+  document.getElementById("results").scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
