@@ -3,221 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Leasing oder Kaufen? – RechnerSchweiz</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fa;
-  color: #172033;
-}
-
-header {
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 20px;
-}
-
-.header-inner {
-  max-width: 1000px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: #172033;
-  text-decoration: none;
-}
-
-.back {
-  color: #667085;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-h1 {
-  font-size: 34px;
-  margin-bottom: 10px;
-}
-
-.intro {
-  color: #667085;
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.section {
-  background: #fff;
-  border-radius: 16px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 15px rgba(0,0,0,.05);
-}
-
-.section h2 {
-  margin-top: 0;
-  font-size: 21px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 18px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 7px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d5dae1;
-  border-radius: 9px;
-  font-size: 16px;
-}
-
-small {
-  color: #7a8492;
-  margin-top: 5px;
-  line-height: 1.4;
-}
-
-button {
-  width: 100%;
-  padding: 16px;
-  border: 0;
-  border-radius: 10px;
-  background: #172033;
-  color: #fff;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: .92;
-}
-
-.results {
-  display: none;
-}
-
-.result-block {
-  margin-bottom: 25px;
-}
-
-.result-block:last-child {
-  margin-bottom: 0;
-}
-
-.result-block h3 {
-  margin-bottom: 12px;
-}
-
-.result-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.result-table tr {
-  border-bottom: 1px solid #eaecf0;
-}
-
-.result-table tr:last-child {
-  border-bottom: 0;
-}
-
-.result-table td {
-  padding: 10px 0;
-}
-
-.result-table td:last-child {
-  text-align: right;
-  font-weight: 600;
-}
-
-.total {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.highlight {
-  margin-top: 25px;
-  padding: 20px;
-  border-radius: 12px;
-  background: #f0f7ff;
-  border: 1px solid #cfe3ff;
-}
-
-.highlight h3 {
-  margin-top: 0;
-}
-
-.big {
-  font-size: 28px;
-  font-weight: 700;
-}
-
-.note {
-  margin-top: 15px;
-  color: #667085;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.error {
-  color: #b42318;
-  font-size: 14px;
-  margin-top: 12px;
-}
-
-@media(max-width:700px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .container {
-    margin-top: 25px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7fa;color:#172033}
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:20px}
+.header-inner{max-width:1000px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:700;color:#172033;text-decoration:none}
+.back{color:#667085;text-decoration:none;font-size:14px}
+.container{max-width:900px;margin:40px auto;padding:0 20px}
+h1{font-size:34px;margin-bottom:10px}
+.intro{color:#667085;margin-bottom:30px;line-height:1.5}
+.section{background:#fff;border-radius:16px;padding:25px;margin-bottom:20px;box-shadow:0 3px 15px rgba(0,0,0,.05)}
+.section h2{margin-top:0;font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.field{display:flex;flex-direction:column}
+label{font-size:14px;font-weight:600;margin-bottom:7px}
+input{width:100%;padding:12px;border:1px solid #d5dae1;border-radius:9px;font-size:16px}
+small{color:#7a8492;margin-top:5px;line-height:1.4}
+button{width:100%;padding:16px;border:0;border-radius:10px;background:#172033;color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+.results{display:none}
+.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.result-card{background:#f7f8fa;padding:20px;border-radius:12px}
+.result-card h3{margin-top:0;font-size:16px}
+.big{font-size:27px;font-weight:700}
+.highlight{background:#f0f7ff;border:1px solid #cfe3ff}
+.note{margin-top:15px;color:#667085;font-size:13px;line-height:1.5}
+@media(max-width:700px){.grid,.result-grid{grid-template-columns:1fr}h1{font-size:28px}}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">RechnerSchweiz</a>
-    <a href="index.html" class="back">← Alle Rechner</a>
-  </div>
+<div class="header-inner">
+<a href="index.html" class="logo">RechnerSchweiz</a>
+<a href="index.html" class="back">← Alle Rechner</a>
+</div>
 </header>
 
 <div class="container">
@@ -225,29 +48,18 @@ button:hover {
 <h1>Leasing oder Kaufen?</h1>
 
 <p class="intro">
-  Vergleiche die Kosten eines Barkaufs mit einem Leasing über dieselbe Laufzeit.
-  Der Rechner zeigt transparent, wie sich die Kosten zusammensetzen.
+Vergleiche einfach, was dich ein Fahrzeug über die gewählte Laufzeit kostet.
 </p>
 
 <!-- KAUF -->
 <div class="section">
-
 <h2>1. Kauf</h2>
 
 <div class="grid">
 
 <div class="field">
-<label for="purchasePrice">Fahrzeugpreis (CHF)</label>
+<label>Fahrzeugpreis (CHF)</label>
 <input id="purchasePrice" type="number" value="45000" min="0">
-</div>
-
-<div class="field">
-<label for="saleValue">Verkaufswert nach Laufzeit (CHF)</label>
-<input id="saleValue" type="number" value="22000" min="0">
-
-<small>
-Geschätzter Wert des Fahrzeugs am Ende der Vergleichsperiode.
-</small>
 </div>
 
 </div>
@@ -256,42 +68,32 @@ Geschätzter Wert des Fahrzeugs am Ende der Vergleichsperiode.
 
 <!-- LEASING -->
 <div class="section">
-
 <h2>2. Leasing</h2>
 
 <div class="grid">
 
 <div class="field">
-<label for="leasingPrice">Fahrzeugpreis (CHF)</label>
+<label>Fahrzeugpreis (CHF)</label>
 <input id="leasingPrice" type="number" value="45000" min="0">
 </div>
 
 <div class="field">
-<label for="downPayment">Anzahlung (CHF)</label>
-<input id="downPayment" type="number" value="5000" min="0">
-</div>
-
-<div class="field">
-<label for="interest">Leasingzins (% p.a.)</label>
+<label>Leasingzins (% p.a.)</label>
 <input id="interest" type="number" value="4.9" min="0" step="0.01">
 </div>
 
 <div class="field">
-<label for="duration">Laufzeit (Monate)</label>
+<label>Laufzeit (Monate)</label>
 <input id="duration" type="number" value="48" min="1">
 </div>
 
 <div class="field">
-<label for="residualValue">Restwert am Ende (CHF)</label>
-<input id="residualValue" type="number" value="22000" min="0">
-
-<small>
-Vertraglich vereinbarter Restwert.
-</small>
+<label>Anzahlung (CHF)</label>
+<input id="downPayment" type="number" value="5000" min="0">
 </div>
 
 <div class="field">
-<label for="kmYear">Kilometer pro Jahr</label>
+<label>Kilometer pro Jahr</label>
 <input id="kmYear" type="number" value="10000" min="0">
 </div>
 
@@ -299,30 +101,29 @@ Vertraglich vereinbarter Restwert.
 </div>
 
 
-<!-- LAUFENDE KOSTEN -->
+<!-- ZUSATZKOSTEN -->
 <div class="section">
-
-<h2>3. Laufende Kosten</h2>
+<h2>3. Zusatzkosten</h2>
 
 <div class="grid">
 
 <div class="field">
-<label for="insurance">Versicherung pro Jahr (CHF)</label>
+<label>Versicherung pro Jahr (CHF)</label>
 <input id="insurance" type="number" value="1500" min="0">
 </div>
 
 <div class="field">
-<label for="service">Service & Wartung pro Jahr (CHF)</label>
+<label>Service & Wartung pro Jahr (CHF)</label>
 <input id="service" type="number" value="800" min="0">
 </div>
 
 <div class="field">
-<label for="fuelPrice">Treibstoffpreis (CHF/L)</label>
+<label>Treibstoffpreis (CHF/L)</label>
 <input id="fuelPrice" type="number" value="1.80" min="0" step="0.01">
 </div>
 
 <div class="field">
-<label for="consumption">Verbrauch (L/100 km)</label>
+<label>Verbrauch (L/100 km)</label>
 <input id="consumption" type="number" value="6.5" min="0" step="0.1">
 </div>
 
@@ -330,150 +131,63 @@ Vertraglich vereinbarter Restwert.
 </div>
 
 
-<button onclick="calculate()">
-Vergleich berechnen
-</button>
-
-<div id="error" class="error"></div>
+<button onclick="calculate()">Vergleich berechnen</button>
 
 
 <!-- ERGEBNIS -->
-<div id="results" class="section results">
+<div class="section results" id="results">
 
 <h2>Dein Ergebnis</h2>
 
+<div class="result-grid">
 
-<!-- KAUF -->
-<div class="result-block">
-
-<h3>Kauf</h3>
-
-<table class="result-table">
-
-<tr>
-<td>Kaufpreis</td>
-<td id="rPurchasePrice"></td>
-</tr>
-
-<tr>
-<td>− Verkaufswert</td>
-<td id="rSaleValue"></td>
-</tr>
-
-<tr>
-<td>Wertverlust</td>
-<td id="rDepreciation"></td>
-</tr>
-
-<tr>
-<td>Versicherung</td>
-<td id="rPurchaseInsurance"></td>
-</tr>
-
-<tr>
-<td>Service & Wartung</td>
-<td id="rPurchaseService"></td>
-</tr>
-
-<tr>
-<td>Treibstoff</td>
-<td id="rPurchaseFuel"></td>
-</tr>
-
-<tr>
-<td class="total">Wirtschaftliche Gesamtkosten</td>
-<td class="total" id="rPurchaseTotal"></td>
-</tr>
-
-</table>
-
+<div class="result-card">
+<h3>Kaufpreis</h3>
+<div class="big" id="rPurchasePrice"></div>
+<small>Einmalige Ausgabe beim Kauf</small>
 </div>
 
-
-<!-- LEASING -->
-<div class="result-block">
-
-<h3>Leasing</h3>
-
-<table class="result-table">
-
-<tr>
-<td>Anzahlung</td>
-<td id="rDownPayment"></td>
-</tr>
-
-<tr>
-<td>Leasingraten</td>
-<td id="rLeasePayments"></td>
-</tr>
-
-<tr>
-<td>davon Zinskosten</td>
-<td id="rInterest"></td>
-</tr>
-
-<tr>
-<td>Versicherung</td>
-<td id="rLeaseInsurance"></td>
-</tr>
-
-<tr>
-<td>Service & Wartung</td>
-<td id="rLeaseService"></td>
-</tr>
-
-<tr>
-<td>Treibstoff</td>
-<td id="rLeaseFuel"></td>
-</tr>
-
-<tr>
-<td class="total">Gesamtkosten Leasing</td>
-<td class="total" id="rLeaseTotal"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<!-- RATE -->
-<div class="result-block">
-
+<div class="result-card">
 <h3>Leasingrate</h3>
+<div class="big" id="rLeaseRate"></div>
+<small>Berechnete monatliche Rate</small>
+</div>
 
-<table class="result-table">
+<div class="result-card">
+<h3>Kauf – Gesamtausgaben</h3>
+<div class="big" id="rPurchaseTotal"></div>
+<small>Kaufpreis + laufende Kosten</small>
+</div>
 
-<tr>
-<td>Monatliche Leasingrate</td>
-<td id="rMonthlyRate"></td>
-</tr>
+<div class="result-card">
+<h3>Leasing – Gesamtausgaben</h3>
+<div class="big" id="rLeaseTotal"></div>
+<small>Anzahlung + Leasingraten + laufende Kosten</small>
+</div>
 
-</table>
+<div class="result-card">
+<h3>Kauf – pro Monat</h3>
+<div class="big" id="rPurchaseMonthly"></div>
+</div>
+
+<div class="result-card">
+<h3>Leasing – pro Monat</h3>
+<div class="big" id="rLeaseMonthly"></div>
+</div>
 
 </div>
 
-
-<!-- VERGLEICH -->
-<div class="highlight">
-
-<h3>Kostenvergleich</h3>
-
+<div class="highlight" style="margin-top:20px">
+<h3>Direkter Vergleich</h3>
 <div class="big" id="rDifference"></div>
-
 <div class="note" id="rExplanation"></div>
-
 </div>
-
 
 <div class="note">
-
-<strong>Wichtig:</strong>
-Beim Kauf wird der erwartete Verkaufswert berücksichtigt.
-Deshalb entspricht der Kaufpreis nicht automatisch den wirtschaftlichen
-Kosten. Du zahlst beim Kauf beispielsweise CHF 45'000, besitzt dafür
-aber am Ende weiterhin ein Fahrzeug mit einem angenommenen Wert.
-
+Beim Kauf wird der gesamte Fahrzeugpreis als Ausgabe berücksichtigt.
+Beim Leasing werden Anzahlung und sämtliche Leasingraten berücksichtigt.
+Ein zukünftiger Verkaufswert des gekauften Fahrzeugs wird bewusst
+nicht berücksichtigt.
 </div>
 
 </div>
@@ -483,241 +197,162 @@ aber am Ende weiterhin ein Fahrzeug mit einem angenommenen Wert.
 
 <script>
 
-function val(id) {
+function n(id){
   return Number(document.getElementById(id).value) || 0;
 }
 
-function money(value) {
-  return new Intl.NumberFormat('de-CH', {
-    style: 'currency',
-    currency: 'CHF',
-    maximumFractionDigits: 0
+function money(value){
+  return new Intl.NumberFormat('de-CH',{
+    style:'currency',
+    currency:'CHF',
+    maximumFractionDigits:0
   }).format(value);
 }
 
-function calculate() {
+function calculate(){
 
-  const purchasePrice = val('purchasePrice');
-  const saleValue = val('saleValue');
+  const purchasePrice = n('purchasePrice');
 
-  const leasingPrice = val('leasingPrice');
-  const downPayment = val('downPayment');
-  const interestRate = val('interest') / 100;
-  const months = val('duration');
-  const residualValue = val('residualValue');
+  const leasingPrice = n('leasingPrice');
+  const interest = n('interest') / 100;
+  const months = n('duration');
+  const downPayment = n('downPayment');
 
-  const kmYear = val('kmYear');
+  const kmYear = n('kmYear');
+  const insurance = n('insurance');
+  const service = n('service');
+  const fuelPrice = n('fuelPrice');
+  const consumption = n('consumption');
 
-  const insurance = val('insurance');
-  const service = val('service');
-  const fuelPrice = val('fuelPrice');
-  const consumption = val('consumption');
-
-  const error = document.getElementById('error');
-  error.textContent = '';
-
-  if (purchasePrice <= 0 || leasingPrice <= 0 || months <= 0) {
-    error.textContent =
-      'Bitte Fahrzeugpreis und Laufzeit korrekt eingeben.';
+  if(purchasePrice <= 0 || leasingPrice <= 0 || months <= 0){
     return;
   }
-
-  if (downPayment > leasingPrice) {
-    error.textContent =
-      'Die Anzahlung darf nicht höher als der Fahrzeugpreis sein.';
-    return;
-  }
-
-  if (residualValue > leasingPrice - downPayment) {
-    error.textContent =
-      'Der Restwert darf nicht höher sein als der nach der Anzahlung verbleibende Betrag.';
-    return;
-  }
-
 
   const years = months / 12;
 
-
-  /* =========================
-     LAUFENDE KOSTEN
-     ========================= */
+  /*
+    LAUFENDE KOSTEN
+  */
 
   const fuelYear =
     (kmYear / 100) * consumption * fuelPrice;
 
-  const insuranceTotal =
-    insurance * years;
+  const runningYear =
+    insurance + service + fuelYear;
 
-  const serviceTotal =
-    service * years;
+  const runningTotal =
+    runningYear * years;
 
-  const fuelTotal =
-    fuelYear * years;
-
-
-  /* =========================
-     KAUF
-     ========================= */
-
-  const depreciation =
-    Math.max(purchasePrice - saleValue, 0);
-
-  const purchaseTotal =
-    depreciation +
-    insuranceTotal +
-    serviceTotal +
-    fuelTotal;
-
-
-  /* =========================
-     LEASING
-     ========================= */
-
-  const financedAmount =
-    leasingPrice - downPayment;
 
   /*
-    Vereinfachtes transparentes Leasingmodell:
+    KAUF
 
-    Amortisation:
-    Fahrzeugpreis - Anzahlung - Restwert
-
-    Zins:
-    durchschnittlich gebundenes Kapital
-    × Zinssatz × Laufzeit
+    Einfach:
+    Fahrzeugpreis + laufende Kosten
   */
 
-  const amortisation =
-    financedAmount - residualValue;
+  const purchaseTotal =
+    purchasePrice + runningTotal;
 
-  const averageCapital =
-    (financedAmount + residualValue) / 2;
 
-  const interestTotal =
-    averageCapital *
-    interestRate *
-    years;
+  /*
+    LEASING
+
+    Ohne Restwert-Eingabe:
+    Die Leasingkosten werden aus Fahrzeugpreis,
+    Anzahlung, Zins und Laufzeit berechnet.
+
+    Für die vereinfachte Berechnung wird der
+    verbleibende Betrag über die Laufzeit verteilt.
+  */
+
+  const financed =
+    Math.max(leasingPrice - downPayment,0);
+
+  const monthlyPrincipal =
+    financed / months;
+
+  const averageBalance =
+    financed / 2;
+
+  const monthlyInterest =
+    averageBalance * interest / 12;
+
+  const leaseRate =
+    monthlyPrincipal + monthlyInterest;
 
   const leasePayments =
-    amortisation +
-    interestTotal;
+    leaseRate * months;
 
-  const monthlyRate =
-    leasePayments / months;
-
-  const leasingTotal =
+  const leaseTotal =
     downPayment +
     leasePayments +
-    insuranceTotal +
-    serviceTotal +
-    fuelTotal;
+    runningTotal;
 
 
-  /* =========================
-     DIFFERENZ
-     ========================= */
+  /*
+    MONATLICHE KOSTEN
+  */
+
+  const purchaseMonthly =
+    purchaseTotal / months;
+
+  const leaseMonthly =
+    leaseTotal / months;
 
   const difference =
-    Math.abs(purchaseTotal - leasingTotal);
+    Math.abs(purchaseTotal - leaseTotal);
 
 
-  /* =========================
-     AUSGABE KAUF
-     ========================= */
+  /*
+    AUSGABE
+  */
 
   document.getElementById('rPurchasePrice').textContent =
     money(purchasePrice);
 
-  document.getElementById('rSaleValue').textContent =
-    '− ' + money(saleValue);
-
-  document.getElementById('rDepreciation').textContent =
-    money(depreciation);
-
-  document.getElementById('rPurchaseInsurance').textContent =
-    money(insuranceTotal);
-
-  document.getElementById('rPurchaseService').textContent =
-    money(serviceTotal);
-
-  document.getElementById('rPurchaseFuel').textContent =
-    money(fuelTotal);
+  document.getElementById('rLeaseRate').textContent =
+    money(leaseRate);
 
   document.getElementById('rPurchaseTotal').textContent =
     money(purchaseTotal);
 
-
-  /* =========================
-     AUSGABE LEASING
-     ========================= */
-
-  document.getElementById('rDownPayment').textContent =
-    money(downPayment);
-
-  document.getElementById('rLeasePayments').textContent =
-    money(leasePayments);
-
-  document.getElementById('rInterest').textContent =
-    money(interestTotal);
-
-  document.getElementById('rLeaseInsurance').textContent =
-    money(insuranceTotal);
-
-  document.getElementById('rLeaseService').textContent =
-    money(serviceTotal);
-
-  document.getElementById('rLeaseFuel').textContent =
-    money(fuelTotal);
-
   document.getElementById('rLeaseTotal').textContent =
-    money(leasingTotal);
+    money(leaseTotal);
+
+  document.getElementById('rPurchaseMonthly').textContent =
+    money(purchaseMonthly);
+
+  document.getElementById('rLeaseMonthly').textContent =
+    money(leaseMonthly);
 
 
-  /* =========================
-     RATE
-     ========================= */
-
-  document.getElementById('rMonthlyRate').textContent =
-    money(monthlyRate);
-
-
-  /* =========================
-     VERGLEICH
-     ========================= */
-
-  if (purchaseTotal < leasingTotal) {
+  if(purchaseTotal < leaseTotal){
 
     document.getElementById('rDifference').textContent =
-      'Kauf verursacht ' +
-      money(difference) +
-      ' weniger wirtschaftliche Kosten';
+      'Kauf: ' + money(difference) + ' weniger';
 
     document.getElementById('rExplanation').textContent =
-      'Über die gewählte Laufzeit ist der Barkauf in dieser Berechnung günstiger.';
+      'Über die gewählte Laufzeit sind die berechneten Gesamtausgaben beim Kauf niedriger.';
 
-  } else if (leasingTotal < purchaseTotal) {
+  }else if(leaseTotal < purchaseTotal){
 
     document.getElementById('rDifference').textContent =
-      'Leasing verursacht ' +
-      money(difference) +
-      ' weniger wirtschaftliche Kosten';
+      'Leasing: ' + money(difference) + ' weniger';
 
     document.getElementById('rExplanation').textContent =
-      'Über die gewählte Laufzeit ist das Leasing in dieser Berechnung günstiger.';
+      'Über die gewählte Laufzeit sind die berechneten Gesamtausgaben beim Leasing niedriger.';
 
-  } else {
+  }else{
 
     document.getElementById('rDifference').textContent =
-      'Beide Varianten sind gleich teuer';
+      'Gleich teuer';
 
     document.getElementById('rExplanation').textContent =
-      'Die berechneten wirtschaftlichen Kosten sind identisch.';
+      'Beide Varianten haben in dieser Berechnung dieselben Gesamtausgaben.';
   }
 
-
-  document.getElementById('results').style.display =
-    'block';
-
+  document.getElementById('results').style.display = 'block';
 }
 
 </script>
