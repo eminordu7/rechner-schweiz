@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://entscheidungsrechner.ch/sitemap.xml
+Sitemap: https://eminordu7.github.io/rechner-schweiz/sitemap.xml
